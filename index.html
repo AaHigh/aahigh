@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>AHIGHTOWER.COM</title>
+<meta name="description" content="Aaron Hightower. Game developer. Creative director. the High Tower District, Fresno CA.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AHIGHTOWER.COM">
+<meta property="og:description" content="Aaron Hightower. Inventor of the arcade keypad. the High Tower District, Fresno CA.">
+<meta property="og:url" content="https://ahightower.com/">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AHIGHTOWER">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --o:#ff8800;--od:#7a3d00;--og:rgba(255,136,0,0.12);
+  --bg:#000;--panel:#060606;--raised:#0d0d0d;
+  --text:#ddd8cc;--dim:#444;--dim2:#666;
+  --mono:'Courier New',Courier,monospace;
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);
+  font-family:var(--mono);overflow:hidden;position:fixed;inset:0;touch-action:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.08) 3px,rgba(0,0,0,.08) 4px)}
+
+/* ── SCREENS ── */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:10;
+  padding:max(env(safe-area-inset-top),44px) 16px max(env(safe-area-inset-bottom),16px)}
+.screen.active{opacity:1;pointer-events:all}
+
+/* corner brackets */
+.brk{position:fixed;width:18px;height:18px;border-color:var(--od);border-style:solid;opacity:.5;z-index:8000}
+.brk.tl{top:12px;left:12px;border-width:2px 0 0 2px}
+.brk.tr{top:12px;right:12px;border-width:2px 2px 0 0}
+.brk.bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
+.brk.br{bottom:12px;right:12px;border-width:0 2px 2px 0}
+
+/* top strip */
+.top-strip{position:fixed;top:0;left:0;right:0;min-height:38px;
+  background:rgba(0,0,0,.88);border-bottom:1px solid #111;z-index:200;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 18px max(env(safe-area-inset-top),4px)}
+.strip-logo{font-size:.55rem;letter-spacing:.22em;color:var(--o);font-weight:900;padding-bottom:8px}
+.strip-sub{font-size:.42rem;letter-spacing:.15em;color:var(--dim);padding-bottom:8px}
+
+/* ════════════════════════
+   SCREEN 1 — PIN ENTRY
+════════════════════════ */
+#scr-pin{gap:0}
+
+.op-wrap{text-align:center;padding:0 22px 16px;max-width:340px;width:100%}
+.op-eyebrow{font-size:.42rem;letter-spacing:.28em;color:var(--od);
+  border-bottom:1px solid #111;padding-bottom:7px;margin-bottom:10px}
+.op-text{font-size:.78rem;line-height:1.85;color:var(--text);letter-spacing:.04em;min-height:5.4em}
+.op-text .nm{color:var(--o);font-weight:900}
+.op-text .ft{color:var(--dim2)}
+.cursor{display:inline-block;width:7px;height:.9em;background:var(--o);
+  vertical-align:text-bottom;animation:blink .75s steps(1) infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* PIN CELLS — 10 digits */
+.pin-row{display:flex;gap:5px;justify-content:center;margin-bottom:5px;padding:0 4px}
+.pc{width:24px;height:28px;border:1px solid var(--od);
+  display:flex;align-items:center;justify-content:center;background:#040404}
+.pc.sep{width:8px;border:none;background:transparent;
+  font-size:.7rem;color:var(--dim);align-self:center;margin-top:2px}
+.pc.filled{border-color:var(--o);background:rgba(255,136,0,.07)}
+.pc.filled::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--o);display:block}
+.pc.cur{border-color:var(--o);animation:cpulse .9s steps(1) infinite}
+@keyframes cpulse{0%,100%{border-color:var(--o)}50%{border-color:var(--od)}}
+
+/* area code readout */
+.ac-readout{
+  font-size:.52rem;letter-spacing:.18em;color:var(--o);
+  text-align:center;min-height:1.4em;margin-bottom:4px;
+  transition:opacity .2s;
+}
+.ac-readout.dim{color:var(--dim)}
+
+.pin-hint{font-size:.42rem;letter-spacing:.18em;color:var(--dim);text-align:center;margin-bottom:12px}
+.err{font-size:.46rem;letter-spacing:.14em;color:#d03030;text-align:center;
+  min-height:1.1em;margin-bottom:6px;opacity:0;transition:opacity .2s}
+.err.show{opacity:1}
+
+/* THE KEYPAD */
+.kp-outer{width:100%;max-width:252px;background:var(--panel);
+  border:1px solid #1a1a1a;border-bottom:3px solid #0a0a0a;padding:12px 12px 8px}
+.kp-label{font-size:.38rem;letter-spacing:.26em;color:var(--dim);
+  text-align:center;border-bottom:1px solid #111;padding-bottom:7px;margin-bottom:9px}
+.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.key{background:var(--raised);border:1px solid #1e1e1e;border-bottom:3px solid #090909;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:9px 4px 7px;cursor:pointer;user-select:none;
+  transition:transform .06s,border-bottom-width .06s,background .06s}
+.key:active,.key.pressed{transform:translateY(2px);border-bottom-width:1px;background:#080808}
+.kn{font-size:1.25rem;font-weight:900;color:var(--text);line-height:1}
+.ks{font-size:.28rem;letter-spacing:.2em;color:var(--dim);margin-top:2px;min-height:.85em}
+.key-star .kn{font-size:.7rem;color:var(--dim2);letter-spacing:.08em}
+.key-hash{background:#080500;border-color:var(--od);border-bottom-color:#2a1000}
+.key-hash .kn{font-size:.58rem;letter-spacing:.08em;color:var(--o);font-weight:900}
+.key-hash:active{background:#0c0700}
+.kp-leg{display:flex;justify-content:space-between;margin-top:7px;
+  padding-top:6px;border-top:1px solid #111;
+  font-size:.36rem;letter-spacing:.14em;color:var(--dim)}
+
+/* ════════════════════════
+   SCREEN 2 — REGISTRATION
+════════════════════════ */
+#scr-new{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.reg-wrap{width:100%;max-width:340px;padding:14px 20px 60px;display:flex;flex-direction:column;gap:16px}
+.reg-hdr{border-bottom:1px solid var(--od);padding-bottom:11px}
+.reg-title{font-size:.52rem;letter-spacing:.28em;color:var(--o);font-weight:900}
+.reg-sub{font-size:.6rem;line-height:1.75;color:var(--dim2);margin-top:7px;letter-spacing:.04em}
+.reg-sub .acc{color:var(--text)}
+
+.pin-badge{background:#050300;border:1px solid var(--od);padding:10px 13px}
+.pb-label{font-size:.38rem;letter-spacing:.26em;color:var(--od)}
+.pb-val{font-size:1.2rem;font-weight:900;letter-spacing:.22em;color:var(--o);margin-top:3px}
+.pb-loc{font-size:.46rem;letter-spacing:.14em;color:var(--dim2);margin-top:3px}
+.pb-warn{font-size:.36rem;letter-spacing:.1em;color:var(--dim);margin-top:5px;border-top:1px solid #1a1a1a;padding-top:5px}
+
+.field{display:flex;flex-direction:column;gap:4px}
+.fl{font-size:.42rem;letter-spacing:.24em;color:var(--od);text-transform:uppercase}
+.fs{font-size:.4rem;letter-spacing:.1em;color:var(--dim)}
+.fi{background:#050505;border:1px solid #1e1e1e;border-bottom:2px solid #282828;
+  color:var(--text);font-family:var(--mono);font-size:.9rem;letter-spacing:.1em;
+  padding:11px 12px;width:100%;outline:none;text-transform:uppercase;
+  -webkit-appearance:none;border-radius:0;caret-color:var(--o)}
+.fi:focus{border-color:#2e2e2e;border-bottom-color:var(--o);background:#060400}
+.fi::placeholder{color:var(--dim);text-transform:none;letter-spacing:normal;font-size:.68rem}
+.fc{font-size:.38rem;letter-spacing:.14em;color:var(--dim);text-align:right}
+.fc.warn{color:var(--o)}
+
+.reg-submit{background:var(--o);color:#000;border:none;font-family:var(--mono);
+  font-size:.72rem;font-weight:900;letter-spacing:.2em;padding:16px;
+  cursor:pointer;text-transform:uppercase;width:100%;margin-top:4px}
+.reg-submit:active{background:#bb4400}
+.reg-err{font-size:.46rem;letter-spacing:.12em;color:#d03030;
+  text-align:center;min-height:1.1em;opacity:0;transition:opacity .2s}
+.reg-err.show{opacity:1}
+
+/* ════════════════════════
+   SCREEN 3 — GREETING
+════════════════════════ */
+#scr-greet{text-align:center}
+.gr-inner{padding:0 22px;max-width:340px;display:flex;flex-direction:column;align-items:center}
+.gr-tag{font-size:.42rem;letter-spacing:.3em;color:var(--od);margin-bottom:10px}
+.gr-loc{font-size:.5rem;letter-spacing:.22em;color:var(--o);margin-bottom:12px}
+.gr-init{font-size:3.4rem;font-weight:900;letter-spacing:.16em;color:var(--o);
+  text-shadow:0 0 40px rgba(255,136,0,.4),0 0 80px rgba(255,136,0,.12);
+  line-height:1;animation:flkr 7s infinite}
+@keyframes flkr{0%,92%,100%{opacity:1}93%{opacity:.8}94%{opacity:1}97%{opacity:.86}}
+.gr-name{font-size:.82rem;font-weight:900;letter-spacing:.14em;color:var(--text);margin-top:7px}
+.gr-visits{font-size:.42rem;letter-spacing:.2em;color:var(--dim);margin-top:5px}
+.gr-visits span{color:var(--o)}
+.gr-rule{width:160px;height:1px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:.3;margin:18px 0}
+.gr-msg{font-size:.68rem;line-height:1.85;color:var(--dim2);letter-spacing:.04em}
+.gr-game{margin-top:12px;font-size:.5rem;letter-spacing:.1em;color:var(--dim)}
+.gr-game span{color:var(--dim2)}
+.gr-btn{margin-top:24px;background:transparent;border:1px solid var(--od);
+  color:var(--o);font-family:var(--mono);font-size:.65rem;font-weight:900;
+  letter-spacing:.2em;padding:14px 28px;cursor:pointer;text-transform:uppercase}
+.gr-btn:active{background:var(--og)}
+
+/* ════════════════════════
+   SCREEN 4 — HUB
+════════════════════════ */
+#scr-hub{gap:0}
+.hub-inner{width:100%;max-width:290px;padding:0 14px;display:flex;flex-direction:column;align-items:center}
+.hub-eye{font-size:.42rem;letter-spacing:.26em;color:var(--dim);margin-bottom:7px;text-align:center}
+.hub-mark{font-size:clamp(1.9rem,7.5vw,3rem);font-weight:900;letter-spacing:.08em;
+  color:var(--o);text-shadow:0 0 40px rgba(255,136,0,.38);line-height:1;text-align:center;animation:flkr 9s infinite}
+.hub-ptag{font-size:.48rem;letter-spacing:.2em;color:var(--dim2);margin-top:7px;text-align:center}
+.hub-ptag .tag{color:var(--o)}
+.hub-rule{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:.28;margin:20px 0}
+.hbtn{display:block;width:100%;padding:16px 14px;font-family:var(--mono);
+  font-size:.72rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;text-align:center;border:none;cursor:pointer;margin-bottom:9px}
+.hbtn-p{background:var(--o);color:#000}
+.hbtn-p::before{content:'▶  ';font-size:.58rem}
+.hbtn-p:active{background:#fff;color:#000}
+.hbtn-g{background:transparent;color:var(--o);border:1px solid var(--od)}
+.hbtn-g::before{content:'◈  ';font-size:.58rem}
+.hbtn-g:active{background:var(--og)}
+.hub-so{font-size:.4rem;letter-spacing:.16em;color:var(--dim);
+  background:none;border:none;font-family:var(--mono);cursor:pointer;margin-top:5px;padding:5px}
+.hub-so:active{color:var(--od)}
+.status{display:flex;align-items:center;gap:6px;font-size:.4rem;letter-spacing:.15em;color:var(--dim);margin-top:12px}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--o);flex-shrink:0;animation:sdp 2.4s infinite}
+@keyframes sdp{0%,100%{opacity:1}50%{opacity:.18}}
+</style>
+</head>
+<body>
+
+<div class="brk tl"></div><div class="brk tr"></div>
+<div class="brk bl"></div><div class="brk br"></div>
+
+<div class="top-strip">
+  <div class="strip-logo">AHIGHTOWER.COM</div>
+  <div class="strip-sub">THE HIGH TOWER DISTRICT · FRESNO CA</div>
+</div>
+
+<!-- ══ SCREEN 1: PIN ══ -->
+<div class="screen active" id="scr-pin">
+  <div class="op-wrap">
+    <div class="op-eyebrow">— OPERATOR MESSAGE —</div>
+    <div class="op-text" id="op-text"><span class="cursor"></span></div>
+  </div>
+
+  <!-- 10-digit display: (XXX) XXX-XXXX -->
+  <div class="pin-row" id="pin-row">
+    <div class="pc sep">(</div>
+    <div class="pc" id="pc0"></div>
+    <div class="pc" id="pc1"></div>
+    <div class="pc" id="pc2"></div>
+    <div class="pc sep">)</div>
+    <div class="pc" id="pc3"></div>
+    <div class="pc" id="pc4"></div>
+    <div class="pc" id="pc5"></div>
+    <div class="pc sep">-</div>
+    <div class="pc" id="pc6"></div>
+    <div class="pc" id="pc7"></div>
+    <div class="pc" id="pc8"></div>
+    <div class="pc" id="pc9"></div>
+  </div>
+
+  <div class="ac-readout dim" id="ac-readout">ENTER AREA CODE TO IDENTIFY REGION</div>
+  <div class="pin-hint">US PLAYERS: USE YOUR AREA CODE + PHONE NUMBER</div>
+  <div class="err" id="pin-err"></div>
+
+  <div class="kp-outer">
+    <div class="kp-label">TEAM RUSH · PLAYER IDENTIFICATION · 10-DIGIT PIN</div>
+    <div class="kp-grid" id="keypad">
+      <div class="key" data-v="1"><span class="kn">1</span><span class="ks"></span></div>
+      <div class="key" data-v="2"><span class="kn">2</span><span class="ks">ABC</span></div>
+      <div class="key" data-v="3"><span class="kn">3</span><span class="ks">DEF</span></div>
+      <div class="key" data-v="4"><span class="kn">4</span><span class="ks">GHI</span></div>
+      <div class="key" data-v="5"><span class="kn">5</span><span class="ks">JKL</span></div>
+      <div class="key" data-v="6"><span class="kn">6</span><span class="ks">MNO</span></div>
+      <div class="key" data-v="7"><span class="kn">7</span><span class="ks">PQRS</span></div>
+      <div class="key" data-v="8"><span class="kn">8</span><span class="ks">TUV</span></div>
+      <div class="key" data-v="9"><span class="kn">9</span><span class="ks">WXYZ</span></div>
+      <div class="key key-star" data-v="star"><span class="kn">✱ CLR</span><span class="ks"></span></div>
+      <div class="key" data-v="0"><span class="kn">0</span><span class="ks">OPER</span></div>
+      <div class="key key-hash" data-v="hash"><span class="kn"># ENTER</span><span class="ks"></span></div>
+    </div>
+    <div class="kp-leg"><span>✱ = CLEAR ALL</span><span># = CONFIRM</span></div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: REGISTRATION ══ -->
+<div class="screen" id="scr-new">
+  <div class="reg-wrap">
+    <div class="reg-hdr">
+      <div class="reg-title">JOIN TEAM RUSH</div>
+      <div class="reg-sub">New member detected.<br>
+        <span class="acc">Enter the data requested on screen.</span><br>
+        That's how I did it in 2049.<br>That's how it works right here.</div>
+    </div>
+    <div class="pin-badge">
+      <div class="pb-label">YOUR MEMBER PIN</div>
+      <div class="pb-val" id="reg-pin-val">——————————</div>
+      <div class="pb-loc" id="reg-pin-loc"></div>
+      <div class="pb-warn">WRITE THIS DOWN. YOU WILL NEED IT TO RETURN.</div>
+    </div>
+    <div class="field">
+      <div class="fl">Driver Name</div><div class="fs">Up to 12 characters</div>
+      <input class="fi" id="inp-name" type="text" maxlength="12"
+        placeholder="Your name" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+      <div class="fc" id="cnt-name">0 / 12</div>
+    </div>
+    <div class="field">
+      <div class="fl">Initials</div><div class="fs">3 letters — your arcade tag</div>
+      <input class="fi" id="inp-init" type="text" maxlength="3"
+        placeholder="AAR" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+      <div class="fc" id="cnt-init">0 / 3</div>
+    </div>
+    <div class="field">
+      <div class="fl">Favorite Arcade Game</div><div class="fs">Any era. Be honest.</div>
+      <input class="fi" id="inp-game" type="text" maxlength="40"
+        placeholder="SF RUSH 2049" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+    </div>
+    <div class="reg-err" id="reg-err"></div>
+    <button class="reg-submit" id="reg-submit"># REGISTER →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: GREETING ══ -->
+<div class="screen" id="scr-greet">
+  <div class="gr-inner">
+    <div class="gr-tag" id="g-tag">TEAM RUSH MEMBER</div>
+    <div class="gr-loc" id="g-loc"></div>
+    <div class="gr-init" id="g-init">···</div>
+    <div class="gr-name" id="g-name">PLAYER</div>
+    <div class="gr-visits" id="g-visits"></div>
+    <div class="gr-rule"></div>
+    <div class="gr-msg" id="g-msg"></div>
+    <div class="gr-game" id="g-game"></div>
+    <button class="gr-btn" id="greet-enter">ENTER THE TOWER →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: HUB ══ -->
+<div class="screen" id="scr-hub">
+  <div class="hub-inner">
+    <div class="hub-eye">the High Tower District</div>
+    <div class="hub-mark">AHIGHTOWER</div>
+    <div class="hub-ptag">MEMBER: <span class="tag" id="hub-tag">—</span></div>
+    <div class="hub-rule"></div>
+    <a class="hbtn hbtn-p" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">PLAY CELLTOWER</a>
+    <a class="hbtn hbtn-g" href="./bio.html">WHO IS AARON HIGHTOWER</a>
+    <button class="hub-so" id="hub-so">[ SWITCH PLAYER ]</button>
+    <div class="status"><span class="sdot"></span>SIGNAL ACTIVE · TOWER DISTRICT</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// AREA CODE DATABASE — all US NPAs with location
+// ═══════════════════════════════════════════════
+const AC = {
+  // California
+  209:'CENTRAL VALLEY CA',210:'SAN ANTONIO TX',212:'MANHATTAN NY',213:'LOS ANGELES CA',
+  214:'DALLAS TX',215:'PHILADELPHIA PA',216:'CLEVELAND OH',217:'CENTRAL ILLINOIS',
+  218:'NORTHERN MINNESOTA',219:'NW INDIANA',220:'EASTERN OHIO',224:'NORTHERN ILLINOIS',
+  225:'BATON ROUGE LA',228:'SOUTHERN MISSISSIPPI',229:'SW GEORGIA',231:'NW MICHIGAN',
+  234:'NE OHIO',235:'CENTRAL MISSOURI',239:'SW FLORIDA',240:'SUBURBAN MARYLAND',
+  248:'OAKLAND COUNTY MI',251:'SOUTHERN ALABAMA',252:'EASTERN NC',253:'TACOMA WA',
+  254:'CENTRAL TEXAS',256:'NORTHERN ALABAMA',260:'NE INDIANA',262:'SE WISCONSIN',
+  267:'PHILADELPHIA PA',269:'SW MICHIGAN',270:'WESTERN KENTUCKY',272:'NE PENNSYLVANIA',
+  276:'SW VIRGINIA',279:'SACRAMENTO CA',281:'HOUSTON TX',301:'SUBURBAN MARYLAND',
+  302:'DELAWARE',303:'DENVER CO',304:'WEST VIRGINIA',305:'MIAMI FL',306:'SASKATCHEWAN CA',
+  307:'WYOMING',308:'WESTERN NEBRASKA',309:'CENTRAL ILLINOIS',310:'LOS ANGELES CA',
+  312:'CHICAGO IL',313:'DETROIT MI',314:'ST LOUIS MO',315:'CENTRAL NEW YORK',
+  316:'WICHITA KS',317:'INDIANAPOLIS IN',318:'NORTHERN LOUISIANA',319:'EASTERN IOWA',
+  320:'CENTRAL MINNESOTA',321:'ORLANDO FL',323:'LOS ANGELES CA',325:'ABILENE TX',
+  326:'DAYTON OH',330:'NE OHIO',331:'SUBURBAN CHICAGO IL',332:'MANHATTAN NY',
+  334:'SOUTHERN ALABAMA',336:'GREENSBORO NC',337:'LAFAYETTE LA',339:'EASTERN MASS',
+  341:'EAST BAY CA',346:'HOUSTON TX',347:'NEW YORK CITY NY',351:'NE MASSACHUSETTS',
+  352:'GAINESVILLE FL',360:'WESTERN WASHINGTON',361:'CORPUS CHRISTI TX',363:'LONG ISLAND NY',
+  385:'SALT LAKE CITY UT',386:'NE FLORIDA',401:'RHODE ISLAND',402:'NEBRASKA',
+  404:'ATLANTA GA',405:'OKLAHOMA CITY OK',406:'MONTANA',407:'ORLANDO FL',
+  408:'SAN JOSE CA',409:'SE TEXAS',410:'BALTIMORE MD',412:'PITTSBURGH PA',
+  413:'WESTERN MASSACHUSETTS',414:'MILWAUKEE WI',415:'SAN FRANCISCO CA',
+  417:'SW MISSOURI',418:'QUEBEC CA',419:'NW OHIO',423:'EASTERN TENNESSEE',
+  424:'LOS ANGELES CA',425:'EASTSIDE SEATTLE WA',430:'EAST TEXAS',432:'WEST TEXAS',
+  434:'CENTRAL VIRGINIA',435:'SOUTHERN UTAH',440:'NE OHIO',442:'INLAND EMPIRE CA',
+  443:'BALTIMORE MD',445:'PHILADELPHIA PA',447:'CENTRAL ILLINOIS',458:'WESTERN OREGON',
+  464:'SOUTH SUBURBS CHICAGO IL',469:'DALLAS TX',470:'ATLANTA GA',475:'CONNECTICUT',
+  478:'CENTRAL GEORGIA',479:'NW ARKANSAS',480:'SCOTTSDALE AZ',484:'EASTERN PENNSYLVANIA',
+  501:'LITTLE ROCK AR',502:'LOUISVILLE KY',503:'PORTLAND OR',504:'NEW ORLEANS LA',
+  505:'NEW MEXICO',506:'NEW BRUNSWICK CA',507:'SOUTHERN MINNESOTA',508:'CENTRAL MASS',
+  509:'EASTERN WASHINGTON',510:'EAST BAY CA',512:'AUSTIN TX',513:'CINCINNATI OH',
+  515:'DES MOINES IA',516:'LONG ISLAND NY',517:'LANSING MI',518:'ALBANY NY',
+  520:'TUCSON AZ',530:'NORTHERN CALIFORNIA',531:'NEBRASKA',534:'NW WISCONSIN',
+  539:'TULSA OK',540:'WESTERN VIRGINIA',541:'EASTERN OREGON',551:'NE NEW JERSEY',
+  559:'FRESNO CA',561:'WEST PALM BEACH FL',562:'LONG BEACH CA',563:'EASTERN IOWA',
+  564:'WESTERN WASHINGTON',567:'NW OHIO',570:'NE PENNSYLVANIA',571:'NORTHERN VIRGINIA',
+  573:'CENTRAL MISSOURI',574:'NORTHERN INDIANA',575:'NEW MEXICO',580:'WESTERN OKLAHOMA',
+  585:'ROCHESTER NY',586:'MACOMB COUNTY MI',601:'SOUTHERN MISSISSIPPI',
+  602:'PHOENIX AZ',603:'NEW HAMPSHIRE',604:'VANCOUVER BC CA',605:'SOUTH DAKOTA',
+  606:'EASTERN KENTUCKY',607:'SOUTHERN NEW YORK',608:'WESTERN WISCONSIN',
+  609:'SOUTH JERSEY',610:'EASTERN PENNSYLVANIA',612:'MINNEAPOLIS MN',
+  614:'COLUMBUS OH',615:'NASHVILLE TN',616:'GRAND RAPIDS MI',617:'BOSTON MA',
+  618:'SOUTHERN ILLINOIS',619:'SAN DIEGO CA',620:'SOUTHERN KANSAS',
+  623:'WEST PHOENIX AZ',626:'SAN GABRIEL VALLEY CA',628:'SAN FRANCISCO CA',
+  629:'NASHVILLE TN',630:'SUBURBAN CHICAGO IL',631:'LONG ISLAND NY',
+  636:'ST LOUIS MO',641:'CENTRAL IOWA',646:'MANHATTAN NY',647:'TORONTO ON CA',
+  650:'PENINSULA CA',651:'ST PAUL MN',657:'ORANGE COUNTY CA',659:'NORTHERN ALABAMA',
+  660:'NORTHWEST MISSOURI',661:'BAKERSFIELD CA',662:'NORTHERN MISSISSIPPI',
+  667:'BALTIMORE MD',669:'SAN JOSE CA',671:'GUAM',678:'ATLANTA GA',
+  680:'CENTRAL NEW YORK',681:'WEST VIRGINIA',682:'FORT WORTH TX',
+  689:'ORLANDO FL',700:'TELECOMMUNICATIONS',701:'NORTH DAKOTA',702:'LAS VEGAS NV',
+  703:'NORTHERN VIRGINIA',704:'CHARLOTTE NC',706:'NORTHERN GEORGIA',707:'NORTH COAST CA',
+  708:'SOUTH SUBURBS CHICAGO IL',712:'WESTERN IOWA',713:'HOUSTON TX',714:'ORANGE COUNTY CA',
+  715:'NW WISCONSIN',716:'BUFFALO NY',717:'CENTRAL PENNSYLVANIA',718:'NEW YORK CITY NY',
+  719:'COLORADO SPRINGS CO',720:'DENVER CO',724:'WESTERN PENNSYLVANIA',
+  725:'LAS VEGAS NV',726:'SAN ANTONIO TX',727:'ST PETE FL',730:'SOUTHERN ILLINOIS',
+  731:'WESTERN TENNESSEE',732:'CENTRAL NEW JERSEY',734:'ANN ARBOR MI',737:'AUSTIN TX',
+  740:'SOUTHEAST OHIO',743:'PIEDMONT NC',747:'LOS ANGELES CA',754:'BROWARD COUNTY FL',
+  757:'HAMPTON ROADS VA',760:'INLAND EMPIRE CA',762:'EASTERN GEORGIA',763:'NW SUBURBS MINNEAPOLIS MN',
+  764:'EAST BAY CA',765:'CENTRAL INDIANA',769:'SOUTHERN MISSISSIPPI',770:'ATLANTA GA',
+  772:'TREASURE COAST FL',773:'CHICAGO IL',774:'CENTRAL MASS',775:'NEVADA',
+  779:'NORTHERN ILLINOIS',781:'EASTERN MASS',785:'NORTHERN KANSAS',786:'MIAMI FL',
+  787:'PUERTO RICO',800:'TOLL FREE',801:'SALT LAKE CITY UT',802:'VERMONT',
+  803:'SOUTH CAROLINA',804:'RICHMOND VA',805:'CENTRAL COAST CA',806:'PANHANDLE TX',
+  808:'HAWAII',810:'FLINT MI',812:'SOUTHERN INDIANA',813:'TAMPA FL',
+  814:'WESTERN PENNSYLVANIA',815:'NORTHERN ILLINOIS',816:'KANSAS CITY MO',
+  817:'FORT WORTH TX',818:'SAN FERNANDO VALLEY CA',820:'CENTRAL COAST CA',
+  826:'WESTERN VIRGINIA',828:'WESTERN NC',830:'HILL COUNTRY TX',831:'MONTEREY CA',
+  832:'HOUSTON TX',838:'NE NEW YORK',839:'SOUTH CAROLINA',843:'COASTAL SOUTH CAROLINA',
+  845:'HUDSON VALLEY NY',847:'NORTHERN SUBURBS CHICAGO IL',848:'CENTRAL NEW JERSEY',
+  850:'TALLAHASSEE FL',854:'COASTAL SOUTH CAROLINA',856:'SOUTH JERSEY',
+  857:'BOSTON MA',858:'SAN DIEGO CA',859:'LEXINGTON KY',860:'CONNECTICUT',
+  862:'NE NEW JERSEY',863:'CENTRAL FLORIDA',864:'UPSTATE SOUTH CAROLINA',
+  865:'KNOXVILLE TN',870:'EASTERN ARKANSAS',872:'CHICAGO IL',878:'PITTSBURGH PA',
+  901:'MEMPHIS TN',903:'EAST TEXAS',904:'JACKSONVILLE FL',906:'UPPER PENINSULA MI',
+  907:'ALASKA',908:'CENTRAL NEW JERSEY',909:'INLAND EMPIRE CA',910:'EASTERN NC',
+  912:'SAVANNAH GA',913:'KANSAS CITY KS',914:'WESTCHESTER COUNTY NY',
+  915:'EL PASO TX',916:'SACRAMENTO CA',917:'NEW YORK CITY NY',918:'TULSA OK',
+  919:'RALEIGH NC',920:'NE WISCONSIN',925:'EAST BAY CA',928:'NORTHERN ARIZONA',
+  929:'NEW YORK CITY NY',930:'SOUTHERN INDIANA',931:'CENTRAL TENNESSEE',
+  934:'LONG ISLAND NY',936:'EAST TEXAS',937:'DAYTON OH',938:'HUNTSVILLE AL',
+  940:'DENTON TX',941:'SARASOTA FL',947:'MICHIGAN',948:'HAMPTON ROADS VA',
+  949:'ORANGE COUNTY CA',951:'RIVERSIDE CA',952:'SW SUBURBS MINNEAPOLIS MN',
+  954:'BROWARD COUNTY FL',956:'LAREDO TX',959:'CONNECTICUT',970:'WESTERN COLORADO',
+  971:'PORTLAND OR',972:'DALLAS TX',973:'NW NEW JERSEY',978:'NORTHERN MASS',
+  979:'BRAZOS VALLEY TX',980:'CHARLOTTE NC',984:'RALEIGH NC',985:'SOUTHEAST LOUISIANA',
+  986:'BOISE ID',989:'CENTRAL MICHIGAN',
+  // Special
+  559:'FRESNO CA — TOWER DISTRICT HOME TURF'
+};
+
+function lookupAC(digits) {
+  if (digits.length < 3) return null;
+  const code = parseInt(digits.slice(0,3));
+  return AC[code] || null;
+}
+
+// ── STORAGE ──
+const PK = 'ahigh_v3_players', SK = 'ahigh_v3_session';
+const load = () => { try{ return JSON.parse(localStorage.getItem(PK)||'{}') }catch(e){ return {} } };
+const save = p => localStorage.setItem(PK, JSON.stringify(p));
+const saveS = pin => localStorage.setItem(SK, pin);
+const clearS = () => localStorage.removeItem(SK);
+const getS = () => localStorage.getItem(SK)||'';
+
+// ── SCREEN MANAGER ──
+const show = id => { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active') };
+
+// ── TYPEWRITER ──
+const INTRO = [
+  {t:"Hello.\n",d:0},{t:"I'm ",d:500},{t:"Aaron Hightower",d:0,c:'nm'},
+  {t:".\n",d:0},{t:"I invented the arcade keypad.\n",d:280,c:'ft'},
+  {t:"\nWhat's your number?",d:480}
+];
+function typewriter(el, segs) {
+  el.innerHTML='';
+  let si=0;
+  function nextSeg(){
+    if(si>=segs.length){ el.innerHTML+='<span class="cursor"></span>'; return; }
+    const seg=segs[si++];
+    setTimeout(()=>typeChars(seg,nextSeg), seg.d||0);
+  }
+  function typeChars(seg,cb){
+    const chars=seg.t.split('');
+    const span=document.createElement('span');
+    if(seg.c) span.className=seg.c;
+    el.appendChild(span);
+    let i=0;
+    (function next(){
+      if(i>=chars.length){cb();return;}
+      const c=chars[i++];
+      span.innerHTML+=c==='\n'?'<br>':c;
+      setTimeout(next,c==='\n'?55:36);
+    })();
+  }
+  nextSeg();
+}
+
+// ── PIN LOGIC — 10 DIGITS ──
+let buf='';
+const PIN_LEN=10;
+const CELL_IDS=[0,1,2,3,4,5,6,7,8,9];
+
+function updateDisplay(){
+  for(let i=0;i<PIN_LEN;i++){
+    const el=document.getElementById('pc'+i);
+    if(!el) continue;
+    el.classList.toggle('filled', i<buf.length);
+    el.classList.toggle('cur', i===buf.length);
+  }
+  // area code readout after 3 digits
+  const ac=document.getElementById('ac-readout');
+  if(buf.length>=3){
+    const loc=lookupAC(buf);
+    if(loc){ ac.textContent='▸ '+loc; ac.classList.remove('dim'); }
+    else { ac.textContent='AREA CODE '+buf.slice(0,3)+' — REGION UNKNOWN'; ac.classList.add('dim'); }
+  } else {
+    ac.textContent='ENTER AREA CODE TO IDENTIFY REGION'; ac.classList.add('dim');
+  }
+}
+
+function showErr(id,msg,ms=2200){
+  const el=document.getElementById(id);
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),ms);
+}
+
+function fmtPin(p){ return '('+p.slice(0,3)+') '+p.slice(3,6)+'-'+p.slice(6,10); }
+
+document.getElementById('keypad').addEventListener('click',e=>{
+  const key=e.target.closest('.key'); if(!key) return;
+  const v=key.dataset.v;
+  key.classList.add('pressed');
+  setTimeout(()=>key.classList.remove('pressed'),110);
+  if(v==='star'){ buf=''; updateDisplay(); return; }
+  if(v==='hash'){ handleSubmit(); return; }
+  if(buf.length<PIN_LEN){ buf+=v; updateDisplay(); if(buf.length===PIN_LEN) setTimeout(handleSubmit,260); }
+});
+
+function handleSubmit(){
+  if(buf.length<PIN_LEN){ showErr('pin-err','ENTER ALL 10 DIGITS'); return; }
+  const players=load();
+  if(players[buf]){ saveS(buf); greetPlayer(players[buf],false); }
+  else {
+    document.getElementById('reg-pin-val').textContent=fmtPin(buf);
+    const loc=lookupAC(buf);
+    document.getElementById('reg-pin-loc').textContent=loc?'▸ '+loc:'';
+    show('scr-new');
+    setTimeout(()=>document.getElementById('inp-name').focus(),400);
+  }
+}
+
+// ── REGISTRATION ──
+function trackC(iId,cId,max){
+  document.getElementById(iId).addEventListener('input',function(){
+    const l=this.value.length;
+    const el=document.getElementById(cId);
+    el.textContent=l+' / '+max;
+    el.classList.toggle('warn',l>=max);
+  });
+}
+trackC('inp-name','cnt-name',12);
+trackC('inp-init','cnt-init',3);
+
+document.getElementById('reg-submit').addEventListener('click',()=>{
+  const name=document.getElementById('inp-name').value.trim().toUpperCase();
+  const init=document.getElementById('inp-init').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  const game=document.getElementById('inp-game').value.trim().toUpperCase();
+  if(!name||!init||!game){ showErr('reg-err','FILL OUT ALL FIELDS'); return; }
+  if(init.length!==3){ showErr('reg-err','INITIALS: EXACTLY 3 LETTERS'); return; }
+  const players=load();
+  const p={pin:buf,name,init,game,loc:lookupAC(buf)||'',joined:Date.now(),visits:0};
+  players[buf]=p; save(players); saveS(buf); greetPlayer(p,true);
+});
+
+// ── GREETING ──
+const MSGS_NEW=[
+  'Good to meet you.\nI built the system that said your score was real.\nNow I\'m building the next one.',
+  'First time through the tower.\nWon\'t be your last.',
+  'Every player gets one first game.\nMake it count.'
+];
+const MSGS_RET=[
+  'You came back.\nThe tower remembers every number\nthat\'s come through that keypad.',
+  'Signal acquired.\nFrequent Driver Miles don\'t forget you.',
+  'Member confirmed.\nPhantom Photon has your best lines on file.'
+];
+
+function greetPlayer(player,isNew){
+  const visits=(player.visits||0)+1;
+  const players=load();
+  if(players[player.pin]){ players[player.pin].visits=visits; save(players); }
+
+  document.getElementById('g-tag').textContent=isNew?'NEW TEAM RUSH MEMBER':'TEAM RUSH MEMBER';
+  document.getElementById('g-loc').textContent=player.loc?'▸ '+player.loc:'';
+  document.getElementById('g-init').textContent=player.init;
+  document.getElementById('g-name').textContent=player.name;
+  document.getElementById('g-visits').innerHTML=isNew
+    ?'FREQUENT DRIVER MILES: <span>0</span>'
+    :'VISIT <span>#'+visits+'</span> &nbsp;·&nbsp; MEMBER SINCE '+new Date(player.joined).getFullYear();
+  const pool=isNew?MSGS_NEW:MSGS_RET;
+  document.getElementById('g-msg').innerHTML=pool[Math.floor(Math.random()*pool.length)].replace(/\n/g,'<br>');
+  document.getElementById('g-game').innerHTML='Favorite game: <span>'+player.game+'</span>';
+  show('scr-greet');
+}
+
+document.getElementById('greet-enter').addEventListener('click',()=>{
+  const p=load()[getS()];
+  document.getElementById('hub-tag').textContent=p?p.init+' · '+p.name:'—';
+  show('scr-hub');
+});
+
+document.getElementById('hub-so').addEventListener('click',()=>{
+  clearS(); buf=''; updateDisplay();
+  ['inp-name','inp-init','inp-game'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cnt-name').textContent='0 / 12';
+  document.getElementById('cnt-init').textContent='0 / 3';
+  show('scr-pin');
+});
+
+// ── INIT ──
+(function init(){
+  const pin=getS();
+  if(pin){ const p=load()[pin]; if(p){ greetPlayer(p,false); return; } }
+  updateDisplay();
+  typewriter(document.getElementById('op-text'),INTRO);
+})();
+</script>
+</body>
+</html>
