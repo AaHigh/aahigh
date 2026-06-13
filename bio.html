@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>AARON HIGHTOWER — Game Developer · Creative Director</title>
+<meta name="description" content="Aaron Hightower. Veteran game developer. Pilotwings 64. SF Rush 2049. Jak 3. Creative director, the High Tower District, Fresno CA.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AARON HIGHTOWER">
+<meta property="og:description" content="Veteran game developer. Creative director. the High Tower District, Fresno CA.">
+<meta property="og:url" content="https://ahightower.com/bio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --orange:#ff8800;
+  --orange-dim:#cc6600;
+  --orange-glow:rgba(255,136,0,0.12);
+  --bg:#000;
+  --text:#e8e8e8;
+  --dim:#555;
+  --dim2:#888;
+  --font-mono:'Courier New',Courier,monospace;
+}
+
+html{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-mono);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+
+body{
+  min-height:100vh;
+  padding:0 0 80px 0;
+}
+
+/* Scanlines */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.06) 2px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events:none;
+  z-index:100;
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,.92);
+  border-bottom:1px solid #1a1a1a;
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:200;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.nav-logo{
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:var(--orange);
+  text-decoration:none;
+}
+.nav-back{
+  font-size:.58rem;
+  letter-spacing:.15em;
+  color:var(--dim2);
+  text-decoration:none;
+  padding:6px 10px;
+  border:1px solid #222;
+}
+.nav-back:active{color:var(--orange);border-color:var(--orange-dim)}
+
+/* ── HERO ── */
+.hero{
+  padding:48px 24px 36px;
+  text-align:center;
+  border-bottom:1px solid #111;
+}
+.hero-eyebrow{
+  font-size:.55rem;
+  letter-spacing:.3em;
+  color:var(--dim2);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.hero-name{
+  font-size:clamp(2.2rem,7vw,3.8rem);
+  font-weight:900;
+  letter-spacing:.06em;
+  color:var(--orange);
+  text-shadow:0 0 40px rgba(255,136,0,0.4);
+  line-height:1;
+  animation:flicker 10s infinite;
+}
+@keyframes flicker{
+  0%,94%,100%{opacity:1}
+  95%{opacity:.88}
+  96%{opacity:1}
+  97%{opacity:.9}
+}
+.hero-title{
+  font-size:clamp(.65rem,.9vw + .4rem,.88rem);
+  letter-spacing:.18em;
+  color:var(--dim2);
+  margin-top:10px;
+  text-transform:uppercase;
+}
+.hero-district{
+  font-size:.58rem;
+  letter-spacing:.22em;
+  color:var(--dim);
+  margin-top:6px;
+}
+
+/* ── SECTION ── */
+section{
+  padding:32px 24px;
+  border-bottom:1px solid #111;
+  max-width:680px;
+  margin:0 auto;
+}
+.section-label{
+  font-size:.5rem;
+  letter-spacing:.3em;
+  color:var(--orange-dim);
+  text-transform:uppercase;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--orange-dim),transparent);
+  opacity:.4;
+}
+.section-label::before{
+  content:'//';
+  opacity:.5;
+}
+
+/* ── CREDITS ── */
+.credits{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.credit-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px 16px;
+  padding-bottom:14px;
+  border-bottom:1px solid #111;
+}
+.credit-item:last-child{border-bottom:none;padding-bottom:0}
+.credit-title{
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.04em;
+  color:var(--text);
+}
+.credit-role{
+  font-size:.6rem;
+  letter-spacing:.1em;
+  color:var(--dim2);
+  margin-top:3px;
+}
+.credit-year{
+  font-size:.6rem;
+  letter-spacing:.08em;
+  color:var(--orange-dim);
+  white-space:nowrap;
+  align-self:start;
+  padding-top:2px;
+}
+.credit-studio{
+  font-size:.55rem;
+  letter-spacing:.1em;
+  color:var(--dim);
+  margin-top:4px;
+  grid-column:1 / -1;
+}
+
+/* ── PROSE ── */
+p{
+  font-size:.78rem;
+  line-height:1.85;
+  color:var(--dim2);
+  letter-spacing:.03em;
+}
+p + p{margin-top:14px}
+.highlight{color:var(--orange)}
+
+/* ── CURRENT WORK ── */
+.project-card{
+  border:1px solid #1c1c1c;
+  padding:20px;
+  margin-top:16px;
+  position:relative;
+  background:rgba(255,136,0,0.02);
+}
+.project-card:first-of-type{margin-top:0}
+.project-name{
+  font-size:.9rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:var(--orange);
+}
+.project-desc{
+  font-size:.68rem;
+  line-height:1.7;
+  color:var(--dim2);
+  margin-top:8px;
+  letter-spacing:.04em;
+}
+.project-link{
+  display:inline-block;
+  margin-top:12px;
+  font-size:.56rem;
+  letter-spacing:.2em;
+  color:var(--orange);
+  text-decoration:none;
+  border:1px solid var(--orange-dim);
+  padding:6px 12px;
+  opacity:.8;
+}
+.project-link:active{opacity:1;background:var(--orange-glow)}
+.project-badge{
+  position:absolute;
+  top:12px;right:12px;
+  font-size:.45rem;
+  letter-spacing:.2em;
+  color:#000;
+  background:var(--orange);
+  padding:3px 7px;
+}
+
+/* ── LINKS ── */
+.link-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:4px;
+}
+.ext-link{
+  display:block;
+  padding:14px 16px;
+  border:1px solid #1c1c1c;
+  text-decoration:none;
+  background:rgba(255,136,0,0.02);
+  transition:all .1s;
+}
+.ext-link:active{background:var(--orange-glow);border-color:var(--orange-dim)}
+.ext-link-label{
+  font-size:.48rem;
+  letter-spacing:.2em;
+  color:var(--dim);
+  text-transform:uppercase;
+  display:block;
+}
+.ext-link-name{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:var(--text);
+  display:block;
+  margin-top:4px;
+}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;
+  padding:40px 24px 60px;
+  font-size:.48rem;
+  letter-spacing:.18em;
+  color:var(--dim);
+  opacity:.5;
+}
+
+/* ── PATENT TAG ── */
+.tag{
+  display:inline-block;
+  font-size:.48rem;
+  letter-spacing:.15em;
+  color:var(--orange-dim);
+  border:1px solid #2a1800;
+  padding:3px 8px;
+  margin-top:6px;
+  vertical-align:middle;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="./index.html">AHIGHTOWER.COM</a>
+  <a class="nav-back" href="./index.html">← BACK</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Game Developer · Creative Director · Broadcaster</div>
+  <div class="hero-name">AARON<br>HIGHTOWER</div>
+  <div class="hero-title">A.A. RON &nbsp;·&nbsp; the High Tower District</div>
+  <div class="hero-district">TOWER DISTRICT · FRESNO CA · 93728</div>
+</div>
+
+<section>
+  <div class="section-label">GAME CREDITS</div>
+  <div class="credits">
+
+    <div class="credit-item">
+      <div>
+        <div class="credit-title">PILOTWINGS 64</div>
+        <div class="credit-role">Developer</div>
+        <div class="credit-studio">Paradigm Simulation · Nintendo N64</div>
+      </div>
+      <div class="credit-year">1996</div>
+    </div>
+
+    <div class="credit-item">
+      <div>
+        <div class="credit-title">SAN FRANCISCO RUSH 2049</div>
+        <div class="credit-role">Developer &nbsp;<span class="tag">PATENT HOLDER</span></div>
+        <div class="credit-studio">Atari Games / Midway · Arcade · Dreamcast · N64</div>
+      </div>
+      <div class="credit-year">1999</div>
+    </div>
+
+    <div class="credit-item">
+      <div>
+        <div class="credit-title">JAK 3</div>
+        <div class="credit-role">Developer</div>
+        <div class="credit-studio">Naughty Dog / Sony · PlayStation 2</div>
+      </div>
+      <div class="credit-year">2004</div>
+    </div>
+
+    <div class="credit-item">
+      <div>
+        <div class="credit-title">FIREFALL</div>
+        <div class="credit-role">Developer</div>
+        <div class="credit-studio">Red 5 Studios · PC Online</div>
+      </div>
+      <div class="credit-year">2013</div>
+    </div>
+
+    <div class="credit-item">
+      <div>
+        <div class="credit-title">SKILL GAMING SYSTEMS</div>
+        <div class="credit-role">Senior Developer</div>
+        <div class="credit-studio">IGT · NanoTech Gaming · Nevada Gaming Control Board</div>
+      </div>
+      <div class="credit-year">2014–</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-label">CURRENT WORK</div>
+
+  <div class="project-card">
+    <div class="project-badge">ACTIVE</div>
+    <div class="project-name">CELLTOWER</div>
+    <div class="project-desc">
+      Single-file HTML5 NES Tetris trainer with cryptographically verified score receipts,
+      AI autoplay, and proof-of-human-work architecture. The math is the trusted party —
+      not the operator. Traces to SHA-based arcade cash-prize verification built at Atari in 1999.
+    </div>
+    <a class="project-link" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">▶ PLAY THE GAME →</a>
+    <a class="project-link" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">⬡ GITHUB →</a>
+  </div>
+
+  <div class="project-card" style="margin-top:12px">
+    <div class="project-badge">LIVE</div>
+    <div class="project-name">HIGH TOWER LIVE</div>
+    <div class="project-desc">
+      A.A. RON broadcast identity. Music production across psychedelic prog, Krautrock, AOR,
+      and blues-rock. Themes: AI governance, signal vs. noise, the Tower District, analog culture.
+      Produced under the High Tower District creative umbrella.
+    </div>
+  </div>
+
+</section>
+
+<section>
+  <div class="section-label">ABOUT</div>
+  <p>
+    Veteran arcade and console developer with credits spanning Nintendo 64, PlayStation 2,
+    Dreamcast, and Nevada-regulated skill gaming. Designed the first
+    <span class="highlight">SHA-based arcade score verification system</span> for cash-prize
+    competitions at Atari Games in 1999 — the same cryptographic philosophy that drives
+    CELLTOWER's proof-of-human-work architecture today.
+  </p>
+  <p>
+    Holds a patent for keypad-based player data storage across linked arcade cabinets.
+    Has direct experience navigating Nevada Gaming Control Board process and California
+    skill-gaming law. Independent developer and creative director operating from
+    the Tower District, Fresno CA.
+  </p>
+  <p>
+    The throughline: <span class="highlight">verifiable fairness</span>.
+    The math as the trusted party, not the operator.
+  </p>
+</section>
+
+<section>
+  <div class="section-label">CONNECT</div>
+  <div class="link-grid">
+    <a class="ext-link" href="https://linkedin.com/in/ahigh" target="_blank" rel="noopener">
+      <span class="ext-link-label">Professional</span>
+      <span class="ext-link-name">LinkedIn</span>
+    </a>
+    <a class="ext-link" href="https://github.com/AaHigh" target="_blank" rel="noopener">
+      <span class="ext-link-label">Open Source</span>
+      <span class="ext-link-name">GitHub</span>
+    </a>
+    <a class="ext-link" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">
+      <span class="ext-link-label">Project</span>
+      <span class="ext-link-name">CELLTOWER</span>
+    </a>
+    <a class="ext-link" href="https://github.com/aahigh/letters" target="_blank" rel="noopener">
+      <span class="ext-link-label">Essays</span>
+      <span class="ext-link-name">Letters</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  AHIGHTOWER.COM &nbsp;·&nbsp; the High Tower District &nbsp;·&nbsp; Fresno CA 93728<br>
+  A.A. RON &nbsp;·&nbsp; HIGH TOWER LIVE &nbsp;·&nbsp; @_AAHIGH
+</footer>
+
+</body>
+</html>
