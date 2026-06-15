@@ -592,11 +592,14 @@ function _drawPinCells(y){
     CTX.strokeRect(x+CTX.lineWidth/2,y+CTX.lineWidth/2,W-CTX.lineWidth,H-CTX.lineWidth);
     CTX.shadowBlur=0;
     if(filled){
-      // filled dot
-      CTX.fillStyle=C.orange; CTX.shadowColor=C.orange; CTX.shadowBlur=6;
-      CTX.beginPath();
-      CTX.arc(x+W/2,y+H/2,H*0.18,0,Math.PI*2);
-      CTX.fill(); CTX.shadowBlur=0;
+      // show actual digit — no masking, this is an arcade not a bank
+      const digit=pinBuf[idx];
+      const dSz=Math.round(H*0.52);
+      CTX.font=`900 ${dSz}px monospace`;
+      CTX.fillStyle=C.orange; CTX.shadowColor=C.orange; CTX.shadowBlur=8;
+      CTX.textAlign='center'; CTX.textBaseline='middle';
+      CTX.fillText(digit, x+W/2, y+H/2+1);
+      CTX.shadowBlur=0;
     }
     x+=W+GAP;
   };
@@ -1010,7 +1013,7 @@ function handleTap(px,py){
     _keyPressId=v; _keyPressUntil=AT+0.12;
     if(v==='star'){ pinBuf=''; return; }
     if(v==='hash'){ handlePinSubmit(); return; }
-    if(pinBuf.length<PIN_LEN){ pinBuf+=v; if(pinBuf.length===PIN_LEN) setTimeout(handlePinSubmit,260); }
+    if(pinBuf.length<PIN_LEN){ pinBuf+=v; if(pinBuf.length===PIN_LEN) setTimeout(handlePinSubmit,80); }
     return;
   }
   if(id==='greet_enter'){
@@ -1045,11 +1048,14 @@ function handlePinSubmit(){
   if(pinBuf.length<PIN_LEN){ showPinErr('ENTER ALL 10 DIGITS'); return; }
   const players=loadP();
   if(players[pinBuf]){
+    // returning player — straight to hub, no friction
     saveS(pinBuf);
-    greetPlayer=players[pinBuf];
-    greetIsNew=false;
-    STATE='GREET';
+    const p=players[pinBuf];
+    p.visits=(p.visits||0)+1;
+    players[pinBuf]=p; saveP(players);
+    STATE='HUB';
   } else {
+    // new player — register first
     regInputs={name:'',init:'',game:''}; regFocus=0; regErr='';
     STATE='REGISTER';
     if(!_inputEl) makeInput();
@@ -1078,7 +1084,7 @@ window.addEventListener('orientationchange', ()=>setTimeout(resize,200));
   const pin=getS();
   if(pin){
     const p2=loadP()[pin];
-    if(p2){ greetPlayer=p2; greetIsNew=false; STATE='GREET'; }
+    if(p2){ STATE='HUB'; }
   }
   // start typewriter
   twTarget=TW_MSGS[0]; twIdx=0; twText=''; twNextT=0;
