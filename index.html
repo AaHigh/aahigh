@@ -1022,10 +1022,13 @@ function handleTap(px,py){
     STATE='HUB'; return;
   }
   if(id==='hub_celltower'){
-    // pass initials to CELLTOWER via sessionStorage so it can pre-fill
+    // Pass initials via sessionStorage then navigate directly.
+    // window.open() is blocked by Safari unless called in a synchronous
+    // user gesture — canvas hit detection breaks that chain. Direct
+    // navigation is instant and works on all platforms.
     const p2=loadP()[getS()];
     if(p2) sessionStorage.setItem('ct_initials', p2.init);
-    window.open('https://aahigh.github.io/CELLTOWER/','_blank','noopener');
+    window.location.href='https://aahigh.github.io/CELLTOWER/';
     return;
   }
   if(id==='hub_bio'){ window.location.href='./bio.html'; return; }
