@@ -9,6 +9,11 @@
 <meta property="og:title" content="AHIGHTOWER.COM">
 <meta property="og:description" content="Aaron Hightower. Inventor of the arcade keypad. the High Tower District, Fresno CA.">
 <meta property="og:url" content="https://ahightower.com/">
+<meta property="og:image" content="https://aahigh.github.io/aahigh/ahightower.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aahigh.github.io/aahigh/og-image.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="AHIGHTOWER">
 <style>
@@ -1022,13 +1027,18 @@ function handleTap(px,py){
     STATE='HUB'; return;
   }
   if(id==='hub_celltower'){
-    // Pass initials via sessionStorage then navigate directly.
-    // window.open() is blocked by Safari unless called in a synchronous
-    // user gesture — canvas hit detection breaks that chain. Direct
-    // navigation is instant and works on all platforms.
     const p2=loadP()[getS()];
     if(p2) sessionStorage.setItem('ct_initials', p2.init);
-    window.location.href='https://aahigh.github.io/CELLTOWER/';
+    // Detect real deployment vs artifact/local preview.
+    // On ahightower.com: navigate same tab (Safari blocks window.open from canvas).
+    // In artifact / localhost / preview: open new tab (navigation would break the preview).
+    const host=window.location.hostname;
+    const isLive=(host==='ahightower.com'||host==='aahigh.github.io'||host.endsWith('.ahightower.com'));
+    if(isLive){
+      window.location.href='https://aahigh.github.io/CELLTOWER/';
+    } else {
+      window.open('https://aahigh.github.io/CELLTOWER/','_blank','noopener');
+    }
     return;
   }
   if(id==='hub_bio'){ window.location.href='./bio.html'; return; }
