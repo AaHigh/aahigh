@@ -9,322 +9,137 @@
 <meta property="og:title" content="AARON HIGHTOWER">
 <meta property="og:description" content="Veteran game developer. Creative director. the High Tower District, Fresno CA.">
 <meta property="og:url" content="https://ahightower.com/bio">
+<meta property="og:image" content="https://aahigh.github.io/aahigh/ahightower.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aahigh.github.io/aahigh/ahightower.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AHIGHTOWER">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#080018;overflow:hidden;
+  position:fixed;inset:0;touch-action:none;font-family:monospace}
+canvas#cv{display:block;position:fixed;top:0;left:0;touch-action:none;z-index:1}
 
-:root{
-  --orange:#ff8800;
-  --orange-dim:#cc6600;
-  --orange-glow:rgba(255,136,0,0.12);
-  --bg:#000;
-  --text:#e8e8e8;
-  --dim:#555;
-  --dim2:#888;
-  --font-mono:'Courier New',Courier,monospace;
-}
+.sr-only{position:absolute;left:-9999px;top:-9999px}
 
-html{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-mono);
+/* ── HUB PANEL — DOM overlay, same pattern as letters/index.html ── */
+#hub-panel{
+  position:fixed;
+  z-index:5;
   overflow-y:auto;
   overflow-x:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.6s ease;
   -webkit-overflow-scrolling:touch;
 }
+#hub-panel.visible{opacity:1;pointer-events:auto}
+#hub-panel::-webkit-scrollbar{width:6px}
+#hub-panel::-webkit-scrollbar-thumb{background:#5500aa}
+#hub-panel::-webkit-scrollbar-track{background:rgba(0,0,16,0.4)}
 
-body{
-  min-height:100vh;
-  padding:0 0 80px 0;
-}
+.back-line{margin-bottom:1rem}
+.back-line a{font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;
+  color:#7755aa;text-decoration:none}
+.back-line a:hover{color:#00ffaa}
 
-/* Scanlines */
-body::before{
-  content:'';
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.06) 2px,
-    rgba(0,0,0,0.06) 4px
-  );
-  pointer-events:none;
-  z-index:100;
-}
+.eyebrow{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:#aa88ff;margin-bottom:0.3rem}
+.role-line{font-size:0.66rem;letter-spacing:1px;color:#7755aa;margin-bottom:1.6rem}
 
-/* ── NAV ── */
-nav{
-  position:sticky;
-  top:0;
-  background:rgba(0,0,0,.92);
-  border-bottom:1px solid #1a1a1a;
-  padding:12px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  z-index:200;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-}
-.nav-logo{
-  font-size:.7rem;
-  font-weight:900;
-  letter-spacing:.2em;
-  color:var(--orange);
-  text-decoration:none;
-}
-.nav-back{
-  font-size:.58rem;
-  letter-spacing:.15em;
-  color:var(--dim2);
-  text-decoration:none;
-  padding:6px 10px;
-  border:1px solid #222;
-}
-.nav-back:active{color:var(--orange);border-color:var(--orange-dim)}
+.title-canvas{display:block;width:100%;height:30px;margin-bottom:0.9rem}
 
-/* ── HERO ── */
-.hero{
-  padding:48px 24px 36px;
-  text-align:center;
-  border-bottom:1px solid #111;
-}
-.hero-eyebrow{
-  font-size:.55rem;
-  letter-spacing:.3em;
-  color:var(--dim2);
-  text-transform:uppercase;
-  margin-bottom:12px;
-}
-.hero-name{
-  font-size:clamp(2.2rem,7vw,3.8rem);
-  font-weight:900;
-  letter-spacing:.06em;
-  color:var(--orange);
-  text-shadow:0 0 40px rgba(255,136,0,0.4);
-  line-height:1;
-  animation:flicker 10s infinite;
-}
-@keyframes flicker{
-  0%,94%,100%{opacity:1}
-  95%{opacity:.88}
-  96%{opacity:1}
-  97%{opacity:.9}
-}
-.hero-title{
-  font-size:clamp(.65rem,.9vw + .4rem,.88rem);
-  letter-spacing:.18em;
-  color:var(--dim2);
-  margin-top:10px;
-  text-transform:uppercase;
-}
-.hero-district{
-  font-size:.58rem;
-  letter-spacing:.22em;
-  color:var(--dim);
-  margin-top:6px;
-}
-
-/* ── SECTION ── */
-section{
-  padding:32px 24px;
-  border-bottom:1px solid #111;
-  max-width:680px;
-  margin:0 auto;
-}
-.section-label{
-  font-size:.5rem;
-  letter-spacing:.3em;
-  color:var(--orange-dim);
-  text-transform:uppercase;
-  margin-bottom:16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.section-label::after{
-  content:'';
-  flex:1;
-  height:1px;
-  background:linear-gradient(90deg,var(--orange-dim),transparent);
-  opacity:.4;
-}
-.section-label::before{
-  content:'//';
-  opacity:.5;
-}
+section{margin-bottom:2.2rem;padding-bottom:1.6rem;border-bottom:1px solid #2a1850}
+section:last-of-type{border-bottom:none}
 
 /* ── CREDITS ── */
-.credits{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
 .credit-item{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:8px 16px;
-  padding-bottom:14px;
-  border-bottom:1px solid #111;
+  display:grid;grid-template-columns:1fr auto;gap:4px 16px;
+  padding:0.8rem 0;border-bottom:1px solid #2a1850;
 }
-.credit-item:last-child{border-bottom:none;padding-bottom:0}
-.credit-title{
-  font-size:.82rem;
-  font-weight:900;
-  letter-spacing:.04em;
-  color:var(--text);
+.credit-item:last-child{border-bottom:none}
+.credit-title{font-size:0.84rem;font-weight:bold;letter-spacing:0.5px;color:#fff}
+.credit-role{font-size:0.66rem;color:#aa88ff;margin-top:3px;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+.credit-studio{font-size:0.62rem;color:#7755aa;margin-top:4px;grid-column:1/-1}
+.credit-year{font-size:0.66rem;color:#00ffaa;white-space:nowrap;align-self:start;padding-top:2px}
+.badge{font-size:0.58rem;padding:0.12rem 0.4rem;border:1px solid #ff8800;color:#ff8800;
+  letter-spacing:0.5px;text-transform:uppercase}
+
+/* ── PROJECT CARDS — same visual language as essay cards ── */
+.project-card{
+  border:1px solid #5500aa;background:rgba(8,0,24,0.78);
+  padding:1.1rem 1.2rem;margin-bottom:1rem;position:relative;
+  transition:border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.credit-role{
-  font-size:.6rem;
-  letter-spacing:.1em;
-  color:var(--dim2);
-  margin-top:3px;
+.project-card:hover{border-color:#00ffaa;box-shadow:0 0 14px rgba(0,255,170,0.18)}
+.project-card::before,.project-card::after{
+  content:'';position:absolute;width:10px;height:10px;border-color:#5500aa;pointer-events:none;
 }
-.credit-year{
-  font-size:.6rem;
-  letter-spacing:.08em;
-  color:var(--orange-dim);
-  white-space:nowrap;
-  align-self:start;
-  padding-top:2px;
+.project-card::before{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid}
+.project-card::after{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid}
+
+.project-status{
+  position:absolute;top:-1px;right:-1px;font-size:0.56rem;letter-spacing:1px;
+  padding:0.25rem 0.55rem;text-transform:uppercase;color:#000;
 }
-.credit-studio{
-  font-size:.55rem;
-  letter-spacing:.1em;
-  color:var(--dim);
-  margin-top:4px;
-  grid-column:1 / -1;
+.status-active{background:#ff8800}
+.status-live{background:#00ffaa}
+
+.project-name{font-size:0.92rem;font-weight:bold;letter-spacing:1.5px;color:#aa88ff;margin-bottom:0.5rem}
+.project-desc{font-size:0.78rem;line-height:1.6;color:#c9b8ff;opacity:0.85;margin-bottom:0.9rem}
+.project-links{display:flex;gap:0.6rem;flex-wrap:wrap}
+
+.btn{
+  display:inline-block;padding:0.5rem 0.9rem;font-size:0.7rem;
+  letter-spacing:1px;text-transform:uppercase;text-decoration:none;
+  font-family:monospace;border:1px solid #5500aa;color:#aa88ff;
+  background:rgba(0,0,16,0.5);transition:all 0.2s ease;
 }
+.btn:hover{border-color:#00ffaa;color:#00ffaa}
+
+@property --hue{syntax:'<number>';inherits:false;initial-value:0}
+.btn-primary{
+  --hue:0;border:2px solid hsl(var(--hue),100%,60%);
+  box-shadow:0 0 9px hsl(var(--hue),100%,50%);
+  animation:hueSpin 4.5s linear infinite;color:#fff;
+}
+@keyframes hueSpin{to{--hue:360}}
 
 /* ── PROSE ── */
-p{
-  font-size:.78rem;
-  line-height:1.85;
-  color:var(--dim2);
-  letter-spacing:.03em;
-}
-p + p{margin-top:14px}
-.highlight{color:var(--orange)}
+p{font-size:0.82rem;line-height:1.8;color:#c9b8ff;opacity:0.9;letter-spacing:0.2px}
+p+p{margin-top:0.9rem}
+.highlight{color:#00ffaa;opacity:1}
 
-/* ── CURRENT WORK ── */
-.project-card{
-  border:1px solid #1c1c1c;
-  padding:20px;
-  margin-top:16px;
-  position:relative;
-  background:rgba(255,136,0,0.02);
-}
-.project-card:first-of-type{margin-top:0}
-.project-name{
-  font-size:.9rem;
-  font-weight:900;
-  letter-spacing:.12em;
-  color:var(--orange);
-}
-.project-desc{
-  font-size:.68rem;
-  line-height:1.7;
-  color:var(--dim2);
-  margin-top:8px;
-  letter-spacing:.04em;
-}
-.project-link{
-  display:inline-block;
-  margin-top:12px;
-  font-size:.56rem;
-  letter-spacing:.2em;
-  color:var(--orange);
-  text-decoration:none;
-  border:1px solid var(--orange-dim);
-  padding:6px 12px;
-  opacity:.8;
-}
-.project-link:active{opacity:1;background:var(--orange-glow)}
-.project-badge{
-  position:absolute;
-  top:12px;right:12px;
-  font-size:.45rem;
-  letter-spacing:.2em;
-  color:#000;
-  background:var(--orange);
-  padding:3px 7px;
-}
-
-/* ── LINKS ── */
-.link-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:4px;
-}
+/* ── LINK GRID ── */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.7rem}
 .ext-link{
-  display:block;
-  padding:14px 16px;
-  border:1px solid #1c1c1c;
-  text-decoration:none;
-  background:rgba(255,136,0,0.02);
-  transition:all .1s;
+  display:block;padding:0.9rem 1rem;border:1px solid #5500aa;
+  background:rgba(8,0,24,0.6);text-decoration:none;transition:all 0.2s ease;
 }
-.ext-link:active{background:var(--orange-glow);border-color:var(--orange-dim)}
-.ext-link-label{
-  font-size:.48rem;
-  letter-spacing:.2em;
-  color:var(--dim);
-  text-transform:uppercase;
-  display:block;
-}
-.ext-link-name{
-  font-size:.72rem;
-  font-weight:900;
-  letter-spacing:.08em;
-  color:var(--text);
-  display:block;
-  margin-top:4px;
-}
+.ext-link:hover{border-color:#00ffaa;box-shadow:0 0 10px rgba(0,255,170,0.15)}
+.ext-link-label{font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;color:#442266;display:block}
+.ext-link-name{font-size:0.78rem;font-weight:bold;letter-spacing:0.5px;color:#fff;display:block;margin-top:0.3rem}
 
-/* ── FOOTER ── */
 footer{
-  text-align:center;
-  padding:40px 24px 60px;
-  font-size:.48rem;
-  letter-spacing:.18em;
-  color:var(--dim);
-  opacity:.5;
-}
-
-/* ── PATENT TAG ── */
-.tag{
-  display:inline-block;
-  font-size:.48rem;
-  letter-spacing:.15em;
-  color:var(--orange-dim);
-  border:1px solid #2a1800;
-  padding:3px 8px;
-  margin-top:6px;
-  vertical-align:middle;
+  text-align:center;font-size:0.72rem;color:#7755aa;letter-spacing:0.5px;
+  padding:1.4rem 0 2.4rem;line-height:1.8;
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="./index.html">AHIGHTOWER.COM</a>
-  <a class="nav-back" href="./index.html">← BACK</a>
-</nav>
+<h1 class="sr-only">Aaron Hightower — Game Developer, Creative Director. the High Tower District, Fresno CA.</h1>
 
-<div class="hero">
-  <div class="hero-eyebrow">Game Developer · Creative Director · Broadcaster</div>
-  <div class="hero-name">AARON<br>HIGHTOWER</div>
-  <div class="hero-title">A.A. RON &nbsp;·&nbsp; the High Tower District</div>
-  <div class="hero-district">TOWER DISTRICT · FRESNO CA · 93728</div>
-</div>
+<canvas id="cv"></canvas>
 
-<section>
-  <div class="section-label">GAME CREDITS</div>
-  <div class="credits">
+<div id="hub-panel">
+  <div class="back-line"><a href="./index.html">← BACK TO AHIGHTOWER.COM</a></div>
+  <div class="eyebrow">GAME DEVELOPER · CREATIVE DIRECTOR · BROADCASTER</div>
+  <div class="role-line">A.A. RON · the High Tower District · TOWER DISTRICT, FRESNO CA 93728</div>
+
+  <section>
+    <canvas class="title-canvas" data-title="GAME CREDITS"></canvas>
 
     <div class="credit-item">
       <div>
@@ -338,7 +153,7 @@ footer{
     <div class="credit-item">
       <div>
         <div class="credit-title">SAN FRANCISCO RUSH 2049</div>
-        <div class="credit-role">Developer &nbsp;<span class="tag">PATENT HOLDER</span></div>
+        <div class="credit-role">Developer <span class="badge">PATENT HOLDER</span></div>
         <div class="credit-studio">Atari Games / Midway · Arcade · Dreamcast · N64</div>
       </div>
       <div class="credit-year">1999</div>
@@ -370,84 +185,521 @@ footer{
       </div>
       <div class="credit-year">2014–</div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section>
+    <canvas class="title-canvas" data-title="CURRENT WORK"></canvas>
 
-<section>
-  <div class="section-label">CURRENT WORK</div>
-
-  <div class="project-card">
-    <div class="project-badge">ACTIVE</div>
-    <div class="project-name">CELLTOWER</div>
-    <div class="project-desc">
-      Single-file HTML5 NES Tetris trainer with cryptographically verified score receipts,
-      AI autoplay, and proof-of-human-work architecture. The math is the trusted party —
-      not the operator. Traces to SHA-based arcade cash-prize verification built at Atari in 1999.
+    <div class="project-card">
+      <div class="project-status status-active">ACTIVE</div>
+      <div class="project-name">CELLTOWER</div>
+      <div class="project-desc">
+        Single-file HTML5 NES Tetris trainer with cryptographically verified score receipts,
+        AI autoplay, and proof-of-human-work architecture. v3.0 stream format: xoshiro128**
+        PRNG, base-92 packed timing, SHA-derived terminal hash. The math is the trusted
+        party — not the operator. Traces to SHA-based arcade cash-prize verification built
+        at Atari in 1999.
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">PLAY THE GAME</a>
+        <a class="btn" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">GITHUB</a>
+      </div>
     </div>
-    <a class="project-link" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">▶ PLAY THE GAME →</a>
-    <a class="project-link" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">⬡ GITHUB →</a>
-  </div>
 
-  <div class="project-card" style="margin-top:12px">
-    <div class="project-badge">LIVE</div>
-    <div class="project-name">HIGH TOWER LIVE</div>
-    <div class="project-desc">
-      A.A. RON broadcast identity. Music production across psychedelic prog, Krautrock, AOR,
-      and blues-rock. Themes: AI governance, signal vs. noise, the Tower District, analog culture.
-      Produced under the High Tower District creative umbrella.
+    <div class="project-card">
+      <div class="project-status status-active">ACTIVE</div>
+      <div class="project-name">SWITCHBOARD</div>
+      <div class="project-desc">
+        Companion tournament operations console for CELLTOWER. Double-entry hash-chained
+        ledger, public score ledger, THE WALL spectator renderer, and contract lifecycle
+        management for cash-prize competitive play.
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://aahigh.github.io/CELLTOWER/switchboard.html" target="_blank" rel="noopener">OPEN SWITCHBOARD</a>
+        <a class="btn" href="https://github.com/AaHigh/CELLTOWER/blob/main/switchboard.html" target="_blank" rel="noopener">GITHUB</a>
+      </div>
     </div>
-  </div>
 
-</section>
+    <div class="project-card">
+      <div class="project-status status-live">LIVE</div>
+      <div class="project-name">LETTERS</div>
+      <div class="project-desc">
+        Formal essays on AI governance, control systems, and the Hightower Derivative,
+        published under the High Tower District banner — provenance, proof-of-human work,
+        and the economics of verified authorship.
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://aahigh.github.io/letters/" target="_blank" rel="noopener">READ THE LETTERS</a>
+        <a class="btn" href="https://github.com/aahigh/letters" target="_blank" rel="noopener">GITHUB</a>
+      </div>
+    </div>
 
-<section>
-  <div class="section-label">ABOUT</div>
-  <p>
-    Veteran arcade and console developer with credits spanning Nintendo 64, PlayStation 2,
-    Dreamcast, and Nevada-regulated skill gaming. Designed the first
-    <span class="highlight">SHA-based arcade score verification system</span> for cash-prize
-    competitions at Atari Games in 1999 — the same cryptographic philosophy that drives
-    CELLTOWER's proof-of-human-work architecture today.
-  </p>
-  <p>
-    Holds a patent for keypad-based player data storage across linked arcade cabinets.
-    Has direct experience navigating Nevada Gaming Control Board process and California
-    skill-gaming law. Independent developer and creative director operating from
-    the Tower District, Fresno CA.
-  </p>
-  <p>
-    The throughline: <span class="highlight">verifiable fairness</span>.
-    The math as the trusted party, not the operator.
-  </p>
-</section>
+    <div class="project-card">
+      <div class="project-status status-live">LIVE</div>
+      <div class="project-name">HIGH TOWER LIVE</div>
+      <div class="project-desc">
+        A.A. RON broadcast identity. Music production across psychedelic prog, Krautrock,
+        AOR, and blues-rock. Themes: AI governance, signal vs. noise, the Tower District,
+        analog culture. Produced under the High Tower District creative umbrella.
+      </div>
+    </div>
+  </section>
 
-<section>
-  <div class="section-label">CONNECT</div>
-  <div class="link-grid">
-    <a class="ext-link" href="https://linkedin.com/in/ahigh" target="_blank" rel="noopener">
-      <span class="ext-link-label">Professional</span>
-      <span class="ext-link-name">LinkedIn</span>
-    </a>
-    <a class="ext-link" href="https://github.com/AaHigh" target="_blank" rel="noopener">
-      <span class="ext-link-label">Open Source</span>
-      <span class="ext-link-name">GitHub</span>
-    </a>
-    <a class="ext-link" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">
-      <span class="ext-link-label">Project</span>
-      <span class="ext-link-name">CELLTOWER</span>
-    </a>
-    <a class="ext-link" href="https://github.com/aahigh/letters" target="_blank" rel="noopener">
-      <span class="ext-link-label">Essays</span>
-      <span class="ext-link-name">Letters</span>
-    </a>
-  </div>
-</section>
+  <section>
+    <canvas class="title-canvas" data-title="ABOUT"></canvas>
+    <p>
+      Veteran arcade and console developer with credits spanning Nintendo 64, PlayStation 2,
+      Dreamcast, and Nevada-regulated skill gaming. Designed the first
+      <span class="highlight">SHA-based arcade score verification system</span> for cash-prize
+      competitions at Atari Games in 1999 — the same cryptographic philosophy that drives
+      CELLTOWER's proof-of-human-work architecture today.
+    </p>
+    <p>
+      Holds a patent for keypad-based player data storage across linked arcade cabinets.
+      Has direct experience navigating Nevada Gaming Control Board process and California
+      skill-gaming law. Independent developer and creative director operating from
+      the Tower District, Fresno CA.
+    </p>
+    <p>
+      The throughline: <span class="highlight">verifiable fairness</span>.
+      The math as the trusted party, not the operator.
+    </p>
+  </section>
 
-<footer>
-  AHIGHTOWER.COM &nbsp;·&nbsp; the High Tower District &nbsp;·&nbsp; Fresno CA 93728<br>
-  A.A. RON &nbsp;·&nbsp; HIGH TOWER LIVE &nbsp;·&nbsp; @_AAHIGH
-</footer>
+  <section>
+    <canvas class="title-canvas" data-title="CONNECT"></canvas>
+    <div class="link-grid">
+      <a class="ext-link" href="https://linkedin.com/in/ahigh" target="_blank" rel="noopener">
+        <span class="ext-link-label">Professional</span>
+        <span class="ext-link-name">LinkedIn</span>
+      </a>
+      <a class="ext-link" href="https://github.com/AaHigh" target="_blank" rel="noopener">
+        <span class="ext-link-label">Open Source</span>
+        <span class="ext-link-name">GitHub</span>
+      </a>
+      <a class="ext-link" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">
+        <span class="ext-link-label">Project</span>
+        <span class="ext-link-name">CELLTOWER</span>
+      </a>
+      <a class="ext-link" href="https://aahigh.github.io/CELLTOWER/switchboard.html" target="_blank" rel="noopener">
+        <span class="ext-link-label">Console</span>
+        <span class="ext-link-name">SWITCHBOARD</span>
+      </a>
+      <a class="ext-link" href="https://aahigh.github.io/letters/" target="_blank" rel="noopener">
+        <span class="ext-link-label">Essays</span>
+        <span class="ext-link-name">LETTERS</span>
+      </a>
+      <a class="ext-link" href="./index.html">
+        <span class="ext-link-label">Home</span>
+        <span class="ext-link-name">AHIGHTOWER.COM</span>
+      </a>
+    </div>
+  </section>
 
+  <footer>
+    AHIGHTOWER.COM · the High Tower District · Fresno CA 93728<br>
+    A.A. RON · HIGH TOWER LIVE · @_AAHIGH
+  </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// BIO — same canvas pipeline as letters/index.html, CELLTOWER,
+// and ahightower.com. Background, header, ticker, brackets, and
+// the splash screen are pixel-identical to the rest of the
+// ecosystem. Bio content is a DOM overlay, same hybrid pattern.
+// ═══════════════════════════════════════════════════════════════
+
+const cv  = document.getElementById('cv');
+const CTX = cv.getContext('2d');
+
+let SW, SH, PORTRAIT;
+let AT = 0, _last = 0;
+
+const C = {
+  bg:     '#080018',
+  border: '#5500aa',
+  borderHi:'#00ffaa',
+  cyan:   '#00ffff',
+  orange: '#ff8800',
+  purple: '#aa88ff',
+  white:  '#ffffff',
+  dim:    '#442266',
+  green:  '#00ff88',
+  red:    '#ff4444',
+};
+
+// ── DM FONT — exact copy from CELLTOWER ─────────────────────
+const DM_FONT = (()=>{
+  const F={};
+  const d=(c,...v)=>{F[c]=v;};
+  d(' ',0x00,0x00,0x00,0x00,0x00);
+  d('!',0x00,0x00,0x5F,0x00,0x00);
+  d('.',0x00,0x60,0x60,0x00,0x00);
+  d('-',0x08,0x08,0x08,0x08,0x08);
+  d('/',0x20,0x10,0x08,0x04,0x02);
+  d(':',0x00,0x36,0x36,0x00,0x00);
+  d('0',0x3E,0x51,0x49,0x45,0x3E);
+  d('1',0x00,0x42,0x7F,0x40,0x00);
+  d('2',0x42,0x61,0x51,0x49,0x46);
+  d('3',0x21,0x41,0x45,0x4B,0x31);
+  d('4',0x18,0x14,0x12,0x7F,0x10);
+  d('5',0x27,0x45,0x45,0x45,0x39);
+  d('6',0x3C,0x4A,0x49,0x49,0x30);
+  d('7',0x01,0x71,0x09,0x05,0x03);
+  d('8',0x36,0x49,0x49,0x49,0x36);
+  d('9',0x06,0x49,0x49,0x29,0x1E);
+  d('A',0x7E,0x11,0x11,0x11,0x7E);
+  d('B',0x7F,0x49,0x49,0x49,0x36);
+  d('C',0x3E,0x41,0x41,0x41,0x22);
+  d('D',0x7F,0x41,0x41,0x22,0x1C);
+  d('E',0x7F,0x49,0x49,0x49,0x41);
+  d('F',0x7F,0x09,0x09,0x09,0x01);
+  d('G',0x3E,0x41,0x49,0x49,0x7A);
+  d('H',0x7F,0x08,0x08,0x08,0x7F);
+  d('I',0x00,0x41,0x7F,0x41,0x00);
+  d('J',0x20,0x40,0x41,0x3F,0x01);
+  d('K',0x7F,0x08,0x14,0x22,0x41);
+  d('L',0x7F,0x40,0x40,0x40,0x40);
+  d('M',0x7F,0x02,0x04,0x02,0x7F);
+  d('N',0x7F,0x04,0x08,0x10,0x7F);
+  d('O',0x3E,0x41,0x41,0x41,0x3E);
+  d('P',0x7F,0x09,0x09,0x09,0x06);
+  d('Q',0x3E,0x41,0x51,0x21,0x5E);
+  d('R',0x7F,0x09,0x19,0x29,0x46);
+  d('S',0x46,0x49,0x49,0x49,0x31);
+  d('T',0x01,0x01,0x7F,0x01,0x01);
+  d('U',0x3F,0x40,0x40,0x40,0x3F);
+  d('V',0x1F,0x20,0x40,0x20,0x1F);
+  d('W',0x3F,0x40,0x38,0x40,0x3F);
+  d('X',0x63,0x14,0x08,0x14,0x63);
+  d('Y',0x07,0x08,0x70,0x08,0x07);
+  d('Z',0x61,0x51,0x49,0x45,0x43);
+  d('[',0x00,0x7F,0x41,0x41,0x00);
+  d(']',0x00,0x41,0x41,0x7F,0x00);
+  d('_',0x40,0x40,0x40,0x40,0x40);
+  d('\x03',0x04,0x2A,0x75,0x2A,0x04); // radio tower glyph
+  'abcdefghijklmnopqrstuvwxyz'.split('').forEach((c,i)=>{
+    F[c]=F[String.fromCharCode(65+i)]||F[' '];
+  });
+  return F;
+})();
+
+function _dmWordLabel(ctx, word, x, y, w, h, color){
+  const str=word.toUpperCase(); const n=str.length; if(!n)return;
+  const dotW=Math.min(w/(n*6), h/8);
+  const dotH=dotW;
+  const charW=6*dotW; const charH=7*dotH;
+  const totalW=n*charW;
+  const startX=x+(w-totalW)/2;
+  const startY=y+(h-charH)/2;
+  ctx.fillStyle=color||'#fff';
+  ctx.shadowColor=color||'#fff';
+  ctx.shadowBlur=dotW*1.5;
+  for(let ci=0;ci<n;ci++){
+    const ch=str[ci];
+    const glyph=DM_FONT[ch]||DM_FONT[' '];
+    const ox=startX+ci*charW;
+    for(let col=0;col<5;col++){
+      const colBits=glyph[col]||0;
+      for(let row=0;row<7;row++){
+        if(colBits&(1<<row)){
+          ctx.fillRect(ox+col*dotW, startY+row*dotH,
+            Math.max(1,dotW-0.5), Math.max(1,dotH-0.5));
+        }
+      }
+    }
+  }
+  ctx.shadowBlur=0;
+}
+
+function _dmRainbow(ctx, str, x, y, w, h, t){
+  const n=str.length; if(!n)return;
+  const dotW=Math.min(w/(n*6), h/8);
+  const dotH=dotW;
+  const charW=6*dotW; const charH=7*dotH;
+  const totalW=n*charW;
+  const startX=x+(w-totalW)/2;
+  const startY=y+(h-charH)/2;
+  for(let ci=0;ci<n;ci++){
+    const hue=(t*60+ci*(360/n))%360;
+    const col=`hsl(${hue},100%,62%)`;
+    const ch=str[ci].toUpperCase();
+    const glyph=DM_FONT[ch]||DM_FONT[' '];
+    const ox=startX+ci*charW;
+    ctx.fillStyle=col; ctx.shadowColor=col; ctx.shadowBlur=dotW*2.5;
+    for(let c=0;c<5;c++){
+      const colBits=glyph[c]||0;
+      for(let row=0;row<7;row++){
+        if(colBits&(1<<row)){
+          ctx.fillRect(ox+c*dotW, startY+row*dotH,
+            Math.max(1,dotW-0.5), Math.max(1,dotH-0.5));
+        }
+      }
+    }
+  }
+  ctx.shadowBlur=0;
+}
+
+let headerBottom=0, tickerTop=0;
+function resize(){
+  SW=document.documentElement.clientWidth||window.innerWidth||390;
+  SH=document.documentElement.clientHeight||window.innerHeight||844;
+  cv.width=SW; cv.height=SH;
+  cv.style.width=SW+'px'; cv.style.height=SH+'px';
+  PORTRAIT=(SH>SW);
+
+  headerBottom = PORTRAIT? SH*0.18 : SH*0.23;
+  tickerTop    = SH - SH*0.04 - 4;
+  layoutPanel();
+}
+
+function layoutPanel(){
+  const panel=document.getElementById('hub-panel');
+  const sideMargin = Math.max(16, Math.round(SW*0.06));
+  panel.style.top    = headerBottom+'px';
+  panel.style.bottom = (SH-tickerTop)+'px';
+  panel.style.left   = sideMargin+'px';
+  panel.style.right  = sideMargin+'px';
+  panel.style.padding = '0.4rem 0.2rem 0 0.2rem';
+}
+
+let _mqX=0;
+const MARQUEE_MSGS=[
+  'THE HIGH TOWER DISTRICT \u00b7 FRESNO CA \u00b7 AHIGHTOWER.COM \u00b7 ',
+  'PILOTWINGS 64 \u00b7 SF RUSH 2049 \u00b7 JAK 3 \u00b7 PATENT HOLDER \u00b7 ',
+  'A.A. RON \u00b7 HIGH TOWER LIVE \u00b7 _AAHIGH \u00b7 ',
+];
+let _mqMsg=MARQUEE_MSGS.join('');
+let _mqHueOff=0;
+
+function _drawTicker(dt){
+  const TH=Math.round(SH*0.04);
+  const TY=SH-TH;
+  CTX.fillStyle='rgba(0,0,16,0.9)';
+  CTX.fillRect(0,TY,SW,TH);
+  CTX.strokeStyle=C.border; CTX.lineWidth=1;
+  CTX.beginPath(); CTX.moveTo(0,TY); CTX.lineTo(SW,TY); CTX.stroke();
+
+  const PX_PER_SEC=SW*0.18;
+  _mqX-=PX_PER_SEC*dt;
+  _mqHueOff+=PX_PER_SEC*0.5*dt;
+
+  const dotH=TH*0.55;
+  const dotW=dotH/8*1.1;
+  const charW=6*dotW; const charH=7*(dotW);
+  const totalW=_mqMsg.length*charW;
+  if(_mqX<-totalW) _mqX+=totalW;
+
+  for(let copy=0;copy<2;copy++){
+    const ox=_mqX+copy*totalW;
+    for(let ci=0;ci<_mqMsg.length;ci++){
+      const cx2=ox+ci*charW;
+      if(cx2<-charW||cx2>SW+charW) continue;
+      const hue=((_mqHueOff+ci*charW)*0.8)%360;
+      const col=`hsl(${hue},100%,62%)`;
+      const ch=_mqMsg[ci].toUpperCase();
+      const glyph=DM_FONT[ch]||DM_FONT[' '];
+      CTX.fillStyle=col; CTX.shadowColor=col; CTX.shadowBlur=3;
+      for(let c=0;c<5;c++){
+        const bits=glyph[c]||0;
+        for(let row=0;row<7;row++){
+          if(bits&(1<<row)){
+            CTX.fillRect(
+              Math.round(cx2+c*dotW),
+              Math.round(TY+(TH-charH)/2+row*dotW),
+              Math.max(1,dotW-0.5), Math.max(1,dotW-0.5)
+            );
+          }
+        }
+      }
+    }
+  }
+  CTX.shadowBlur=0;
+}
+
+function _drawBrackets(){
+  const s=Math.round(SW*0.05);
+  const m=Math.round(SW*0.03);
+  const T=Math.round(SH*0.04)+m;
+  const B=SH-Math.round(SH*0.04)-m;
+  CTX.strokeStyle=C.border; CTX.lineWidth=2;
+  [[m,T,1,1],[SW-m,T,-1,1],[m,B,1,-1],[SW-m,B,-1,-1]].forEach(([x,y,dx,dy])=>{
+    CTX.beginPath();
+    CTX.moveTo(x+s*dx,y); CTX.lineTo(x,y); CTX.lineTo(x,y+s*dy);
+    CTX.stroke();
+  });
+}
+
+function _drawHeader(){
+  const str='AARON HIGHTOWER';
+  const hY=PORTRAIT?SH*0.04:SH*0.05;
+  const hH=PORTRAIT?SH*0.07:SH*0.10;
+  const hX=SW*0.04; const hW=SW*0.92;
+  _dmRainbow(CTX, str, hX, hY, hW, hH, AT);
+
+  const sub='THE HIGH TOWER DISTRICT \u00b7 FRESNO CA';
+  CTX.font=`600 ${Math.round(SW*0.022)}px monospace`;
+  CTX.fillStyle=C.dim; CTX.textAlign='center'; CTX.textBaseline='top';
+  CTX.shadowBlur=0;
+  CTX.fillText(sub, SW/2, hY+hH+SW*0.01);
+}
+
+let STATE='SPLASH';
+
+function drawSplash(t){
+  const bx=SW*0.06, by=headerBottom, bw=SW*0.88, bh=tickerTop-headerBottom;
+
+  CTX.fillStyle='rgba(0,0,0,0.55)';
+  CTX.fillRect(bx,by,bw,bh);
+
+  const barCount=18;
+  const barW=bw/barCount;
+  const maxBarH=bh*0.40;
+  const barBaseY=by+bh*0.62;
+
+  for(let i=0;i<barCount;i++){
+    const phase=i*1.3+0.7;
+    const speed=0.4+(i%5)*0.15;
+    const frac=0.15+0.85*Math.abs(Math.sin(t*speed+phase));
+    const barH=maxBarH*frac;
+    const bBarX=bx+i*barW+barW*0.08;
+    const bBarW=barW*0.78;
+
+    const segH=Math.max(3,bh*0.018);
+    const segGap=Math.max(1,segH*0.35);
+    const segStep=segH+segGap;
+    const numSegs=Math.floor(barH/segStep);
+
+    for(let s=0;s<numSegs;s++){
+      const segFrac=s/Math.max(1,Math.floor(maxBarH/segStep));
+      let r,g,b;
+      if(segFrac<0.6){ r=0; g=200; b=40+(segFrac*80)|0; }
+      else if(segFrac<0.82){ const f=(segFrac-0.6)/0.22; r=(f*255)|0; g=200; b=0; }
+      else { const f=(segFrac-0.82)/0.18; r=255; g=(200*(1-f))|0; b=0; }
+      const alpha=0.7+0.3*frac;
+      CTX.fillStyle=`rgba(${r},${g},${b},${alpha})`;
+      CTX.shadowColor=`rgb(${r},${g},${b})`;
+      CTX.shadowBlur=segH*1.2;
+      const sy=barBaseY-(s+1)*segStep;
+      CTX.fillRect(bBarX,sy,bBarW,segH);
+    }
+    const peakFrac=0.2+0.78*Math.abs(Math.sin(t*speed*0.3+phase+1.1));
+    const peakH=maxBarH*Math.max(frac,peakFrac);
+    const peakY=barBaseY-peakH-segStep;
+    CTX.fillStyle='rgba(255,255,100,0.9)';
+    CTX.shadowColor='#ffff44'; CTX.shadowBlur=segH*2;
+    CTX.fillRect(bBarX,peakY,bBarW,segH);
+  }
+  CTX.shadowBlur=0;
+
+  _dmWordLabel(CTX,'GAME DEVELOPER \u00b7 CREATIVE DIRECTOR \u00b7 BROADCASTER',
+    bx+bw*0.04, by+bh*0.02, bw*0.92, bh*0.05, '#7755aa');
+
+  const btnW=bw*0.78, btnH=bh*0.14;
+  const btnX=bx+(bw-btnW)/2, btnY=by+bh*0.68;
+  const pulse=0.65+0.35*Math.sin(t*2.8);
+
+  CTX.fillStyle='rgba(0,0,0,0.88)';
+  roundRect(btnX,btnY,btnW,btnH,10); CTX.fill();
+
+  const hB1=(t*40)%360, hB2=(hB1+180)%360;
+  CTX.strokeStyle=`hsla(${hB1},100%,60%,${pulse})`;
+  CTX.lineWidth=2.5;
+  roundRect(btnX,btnY,btnW,btnH,10); CTX.stroke();
+  CTX.strokeStyle=`hsla(${hB2},100%,60%,${pulse*0.5})`;
+  CTX.lineWidth=1;
+  roundRect(btnX+3,btnY+3,btnW-6,btnH-6,8); CTX.stroke();
+
+  const hT=(t*50+120)%360;
+  CTX.shadowColor=`hsl(${hT},100%,65%)`; CTX.shadowBlur=12*pulse;
+  _dmWordLabel(CTX,'TAP TO ENTER',btnX+btnW*0.06,btnY+btnH*0.16,btnW*0.88,btnH*0.7,`hsl(${hT},100%,70%)`);
+  CTX.shadowBlur=0;
+
+  const waveY=by+bh*0.86, waveH=bh*0.10;
+  CTX.strokeStyle='rgba(0,255,150,0.5)'; CTX.lineWidth=1.5;
+  CTX.beginPath();
+  for(let px=0;px<bw;px+=2){
+    const phase2=px/bw*Math.PI*6;
+    const amp=waveH*0.4*(0.5+0.5*Math.sin(t*1.8+px*0.04));
+    const wy=waveY+waveH/2+amp*Math.sin(phase2+t*3.2);
+    px===0?CTX.moveTo(bx+px,wy):CTX.lineTo(bx+px,wy);
+  }
+  CTX.stroke();
+  CTX.strokeStyle='rgba(180,0,255,0.35)';
+  CTX.beginPath();
+  for(let px=0;px<bw;px+=2){
+    const phase2=px/bw*Math.PI*8+1.2;
+    const amp=waveH*0.3*(0.4+0.6*Math.abs(Math.sin(t*2.1+px*0.03)));
+    const wy=waveY+waveH/2+amp*Math.sin(phase2-t*2.5);
+    px===0?CTX.moveTo(bx+px,wy):CTX.lineTo(bx+px,wy);
+  }
+  CTX.stroke();
+}
+
+function roundRect(x,y,w,h,r){
+  CTX.beginPath();
+  CTX.moveTo(x+r,y);
+  CTX.arcTo(x+w,y,x+w,y+h,r);
+  CTX.arcTo(x+w,y+h,x,y+h,r);
+  CTX.arcTo(x,y+h,x,y,r);
+  CTX.arcTo(x,y,x+w,y,r);
+  CTX.closePath();
+}
+
+// per-section DM rainbow title canvases (same mechanism as letters page)
+let titleCanvasList=[];
+function setupTitleCanvases(){
+  titleCanvasList=[];
+  document.querySelectorAll('.title-canvas').forEach(canvas=>{
+    const rect=canvas.getBoundingClientRect();
+    const w=Math.max(40,Math.round(rect.width));
+    const h=30;
+    canvas.width=w; canvas.height=h;
+    titleCanvasList.push({canvas, ctx:canvas.getContext('2d'), text:canvas.dataset.title, w, h});
+  });
+}
+
+function drawFrame(ts){
+  const dt=Math.min((ts-_last)/1000, 0.05);
+  _last=ts; AT=ts/1000;
+
+  CTX.fillStyle=C.bg;
+  CTX.fillRect(0,0,SW,SH);
+
+  CTX.strokeStyle='rgba(85,0,170,0.12)';
+  CTX.lineWidth=1;
+  const GRID=Math.round(SW*0.08);
+  for(let x=0;x<SW;x+=GRID){CTX.beginPath();CTX.moveTo(x,0);CTX.lineTo(x,SH);CTX.stroke();}
+  for(let y=0;y<SH;y+=GRID){CTX.beginPath();CTX.moveTo(0,y);CTX.lineTo(SW,y);CTX.stroke();}
+
+  _drawTicker(dt);
+  _drawBrackets();
+  _drawHeader();
+
+  if(STATE==='SPLASH') drawSplash(AT);
+
+  for(const tc of titleCanvasList){
+    tc.ctx.clearRect(0,0,tc.w,tc.h);
+    _dmRainbow(tc.ctx, tc.text, 0, 0, tc.w, tc.h, AT);
+  }
+
+  requestAnimationFrame(drawFrame);
+}
+
+function enterHub(){
+  if(STATE!=='SPLASH') return;
+  STATE='HUB';
+  document.getElementById('hub-panel').classList.add('visible');
+}
+cv.addEventListener('click', enterHub);
+cv.addEventListener('touchstart', e=>{ e.preventDefault(); enterHub(); }, {passive:false});
+
+window.addEventListener('resize', resize);
+
+resize();
+setupTitleCanvases();
+requestAnimationFrame(drawFrame);
+</script>
 </body>
 </html>
