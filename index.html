@@ -1162,11 +1162,8 @@ window.addEventListener('orientationchange', ()=>setTimeout(resize,200));
 // ── INIT ─────────────────────────────────────────────────────
 (function init(){
   resize();
-  const pin=getS();
-  if(pin){
-    const p2=loadP()[pin];
-    if(p2){ STATE='HUB'; }
-  }
+  // HARD-DISABLE identity gate — always jump straight to HUB
+  STATE='HUB';
   // start typewriter
   twTarget=TW_MSGS[0]; twIdx=0; twText=''; twNextT=0;
   requestAnimationFrame(drawFrame);
