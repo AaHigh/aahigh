@@ -1,705 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>AARON HIGHTOWER — Game Developer · Creative Director</title>
-<meta name="description" content="Aaron Hightower. Veteran game developer. Pilotwings 64. SF Rush 2049. Jak 3. Creative director, the High Tower District, Fresno CA.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AARON HIGHTOWER">
-<meta property="og:description" content="Veteran game developer. Creative director. the High Tower District, Fresno CA.">
-<meta property="og:url" content="https://aahigh.github.io/aahigh/bio.html">
-<meta property="og:image" content="https://aahigh.github.io/aahigh/ahightower.png">
-<meta property="og:image:width" content="800">
-<meta property="og:image:height" content="800">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aahigh.github.io/aahigh/ahightower.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="AHIGHTOWER">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#080018;overflow:hidden;
-  position:fixed;inset:0;touch-action:none;font-family:monospace}
-canvas#cv{display:block;position:fixed;top:0;left:0;touch-action:none;z-index:1}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AARON HIGHTOWER — Bio</title>
+  <meta name="description" content="Game developer, creative director, patent holder. Atari coin-op, Naughty Dog, NanoTech Gaming. High Tower District, Fresno CA." />
+  
+  <meta property="og:title" content="AARON HIGHTOWER — Bio" />
+  <meta property="og:description" content="Veteran arcade and console developer. San Francisco Rush 2049 lead, Jak 3, patents, CELLTOWER." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://ahightower.com/bio" />
 
-.sr-only{position:absolute;left:-9999px;top:-9999px}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
-/* ── HUB PANEL — DOM overlay, same pattern as letters/index.html ── */
-#hub-panel{
-  position:fixed;
-  z-index:5;
-  overflow-y:auto;
-  overflow-x:hidden;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.6s ease;
-  -webkit-overflow-scrolling:touch;
-}
-#hub-panel.visible{opacity:1;pointer-events:auto}
-#hub-panel::-webkit-scrollbar{width:6px}
-#hub-panel::-webkit-scrollbar-thumb{background:#5500aa}
-#hub-panel::-webkit-scrollbar-track{background:rgba(0,0,16,0.4)}
-
-.back-line{margin-bottom:1rem}
-.back-line a{font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;
-  color:#7755aa;text-decoration:none}
-.back-line a:hover{color:#00ffaa}
-
-.eyebrow{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:#aa88ff;margin-bottom:0.3rem}
-.role-line{font-size:0.66rem;letter-spacing:1px;color:#7755aa;margin-bottom:1.6rem}
-
-.title-canvas{display:block;width:100%;height:30px;margin-bottom:0.9rem}
-
-section{margin-bottom:2.2rem;padding-bottom:1.6rem;border-bottom:1px solid #2a1850}
-section:last-of-type{border-bottom:none}
-
-/* ── CREDITS ── */
-.credit-item{
-  display:grid;grid-template-columns:1fr auto;gap:4px 16px;
-  padding:0.8rem 0;border-bottom:1px solid #2a1850;
-}
-.credit-item:last-child{border-bottom:none}
-.credit-title{font-size:0.84rem;font-weight:bold;letter-spacing:0.5px;color:#fff}
-.credit-role{font-size:0.66rem;color:#aa88ff;margin-top:3px;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
-.credit-studio{font-size:0.62rem;color:#7755aa;margin-top:4px;grid-column:1/-1}
-.credit-year{font-size:0.66rem;color:#00ffaa;white-space:nowrap;align-self:start;padding-top:2px}
-.badge{font-size:0.58rem;padding:0.12rem 0.4rem;border:1px solid #ff8800;color:#ff8800;
-  letter-spacing:0.5px;text-transform:uppercase}
-
-/* ── PROJECT CARDS — same visual language as essay cards ── */
-.project-card{
-  border:1px solid #5500aa;background:rgba(8,0,24,0.78);
-  padding:1.1rem 1.2rem;margin-bottom:1rem;position:relative;
-  transition:border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.project-card:hover{border-color:#00ffaa;box-shadow:0 0 14px rgba(0,255,170,0.18)}
-.project-card::before,.project-card::after{
-  content:'';position:absolute;width:10px;height:10px;border-color:#5500aa;pointer-events:none;
-}
-.project-card::before{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid}
-.project-card::after{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid}
-
-.project-status{
-  position:absolute;top:-1px;right:-1px;font-size:0.56rem;letter-spacing:1px;
-  padding:0.25rem 0.55rem;text-transform:uppercase;color:#000;
-}
-.status-active{background:#ff8800}
-.status-live{background:#00ffaa}
-
-.project-name{font-size:0.92rem;font-weight:bold;letter-spacing:1.5px;color:#aa88ff;margin-bottom:0.5rem}
-.project-desc{font-size:0.78rem;line-height:1.6;color:#c9b8ff;opacity:0.85;margin-bottom:0.9rem}
-.project-links{display:flex;gap:0.6rem;flex-wrap:wrap}
-
-.btn{
-  display:inline-block;padding:0.5rem 0.9rem;font-size:0.7rem;
-  letter-spacing:1px;text-transform:uppercase;text-decoration:none;
-  font-family:monospace;border:1px solid #5500aa;color:#aa88ff;
-  background:rgba(0,0,16,0.5);transition:all 0.2s ease;
-}
-.btn:hover{border-color:#00ffaa;color:#00ffaa}
-
-@property --hue{syntax:'<number>';inherits:false;initial-value:0}
-.btn-primary{
-  --hue:0;border:2px solid hsl(var(--hue),100%,60%);
-  box-shadow:0 0 9px hsl(var(--hue),100%,50%);
-  animation:hueSpin 4.5s linear infinite;color:#fff;
-}
-@keyframes hueSpin{to{--hue:360}}
-
-/* ── PROSE ── */
-p{font-size:0.82rem;line-height:1.8;color:#c9b8ff;opacity:0.9;letter-spacing:0.2px}
-p+p{margin-top:0.9rem}
-.highlight{color:#00ffaa;opacity:1}
-
-/* ── LINK GRID ── */
-.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.7rem}
-.ext-link{
-  display:block;padding:0.9rem 1rem;border:1px solid #5500aa;
-  background:rgba(8,0,24,0.6);text-decoration:none;transition:all 0.2s ease;
-}
-.ext-link:hover{border-color:#00ffaa;box-shadow:0 0 10px rgba(0,255,170,0.15)}
-.ext-link-label{font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;color:#442266;display:block}
-.ext-link-name{font-size:0.78rem;font-weight:bold;letter-spacing:0.5px;color:#fff;display:block;margin-top:0.3rem}
-
-footer{
-  text-align:center;font-size:0.72rem;color:#7755aa;letter-spacing:0.5px;
-  padding:1.4rem 0 2.4rem;line-height:1.8;
-}
-</style>
-</head>
-<body>
-
-<h1 class="sr-only">Aaron Hightower — Game Developer, Creative Director. the High Tower District, Fresno CA.</h1>
-
-<canvas id="cv"></canvas>
-
-<div id="hub-panel">
-  <div class="back-line"><a href="./index.html">← BACK TO AHIGHTOWER.COM</a></div>
-  <div class="eyebrow">GAME DEVELOPER · CREATIVE DIRECTOR · BROADCASTER</div>
-  <div class="role-line">A.A. RON · the High Tower District · TOWER DISTRICT, FRESNO CA 93728</div>
-
-  <section>
-    <canvas class="title-canvas" data-title="GAME CREDITS"></canvas>
-
-    <div class="credit-item">
-      <div>
-        <div class="credit-title">PILOTWINGS 64</div>
-        <div class="credit-role">Developer</div>
-        <div class="credit-studio">Paradigm Simulation · Nintendo N64</div>
-      </div>
-      <div class="credit-year">1996</div>
-    </div>
-
-    <div class="credit-item">
-      <div>
-        <div class="credit-title">SAN FRANCISCO RUSH 2049</div>
-        <div class="credit-role">Developer <span class="badge">PATENT HOLDER</span></div>
-        <div class="credit-studio">Atari Games / Midway · Arcade · Dreamcast · N64</div>
-      </div>
-      <div class="credit-year">1999</div>
-    </div>
-
-    <div class="credit-item">
-      <div>
-        <div class="credit-title">JAK 3</div>
-        <div class="credit-role">Developer</div>
-        <div class="credit-studio">Naughty Dog / Sony · PlayStation 2</div>
-      </div>
-      <div class="credit-year">2004</div>
-    </div>
-
-    <div class="credit-item">
-      <div>
-        <div class="credit-title">FIREFALL</div>
-        <div class="credit-role">Developer</div>
-        <div class="credit-studio">Red 5 Studios · PC Online</div>
-      </div>
-      <div class="credit-year">2013</div>
-    </div>
-
-    <div class="credit-item">
-      <div>
-        <div class="credit-title">SKILL GAMING SYSTEMS</div>
-        <div class="credit-role">Senior Developer</div>
-        <div class="credit-studio">IGT · NanoTech Gaming · Nevada Gaming Control Board</div>
-      </div>
-      <div class="credit-year">2014–</div>
-    </div>
-  </section>
-
-  <section>
-    <canvas class="title-canvas" data-title="CURRENT WORK"></canvas>
-
-    <div class="project-card">
-      <div class="project-status status-active">ACTIVE</div>
-      <div class="project-name">CELLTOWER</div>
-      <div class="project-desc">
-        Single-file HTML5 NES Tetris trainer with cryptographically verified score receipts,
-        AI autoplay, and proof-of-human-work architecture. v3.0 stream format: xoshiro128**
-        PRNG, base-92 packed timing, SHA-derived terminal hash. The math is the trusted
-        party — not the operator. Traces to SHA-based arcade cash-prize verification built
-        at Atari in 1999.
-      </div>
-      <div class="project-links">
-        <a class="btn btn-primary" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">PLAY THE GAME</a>
-        <a class="btn" href="https://github.com/AaHigh/CELLTOWER" target="_blank" rel="noopener">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-status status-active">ACTIVE</div>
-      <div class="project-name">SWITCHBOARD</div>
-      <div class="project-desc">
-        Companion tournament operations console for CELLTOWER. Double-entry hash-chained
-        ledger, public score ledger, THE WALL spectator renderer, and contract lifecycle
-        management for cash-prize competitive play.
-      </div>
-      <div class="project-links">
-        <a class="btn btn-primary" href="https://aahigh.github.io/CELLTOWER/switchboard.html" target="_blank" rel="noopener">OPEN SWITCHBOARD</a>
-        <a class="btn" href="https://github.com/AaHigh/CELLTOWER/blob/main/switchboard.html" target="_blank" rel="noopener">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-status status-live">LIVE</div>
-      <div class="project-name">LETTERS</div>
-      <div class="project-desc">
-        Formal essays on AI governance, control systems, and the Hightower Derivative,
-        published under the High Tower District banner — provenance, proof-of-human work,
-        and the economics of verified authorship.
-      </div>
-      <div class="project-links">
-        <a class="btn btn-primary" href="https://aahigh.github.io/letters/" target="_blank" rel="noopener">READ THE LETTERS</a>
-        <a class="btn" href="https://github.com/aahigh/letters" target="_blank" rel="noopener">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-status status-live">LIVE</div>
-      <div class="project-name">HIGH TOWER LIVE</div>
-      <div class="project-desc">
-        A.A. RON broadcast identity. Music production across psychedelic prog, Krautrock,
-        AOR, and blues-rock. Themes: AI governance, signal vs. noise, the Tower District,
-        analog culture. Produced under the High Tower District creative umbrella.
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <canvas class="title-canvas" data-title="ABOUT"></canvas>
-    <p>
-      Veteran arcade and console developer with credits spanning Nintendo 64, PlayStation 2,
-      Dreamcast, and Nevada-regulated skill gaming. Designed the first
-      <span class="highlight">SHA-based arcade score verification system</span> for cash-prize
-      competitions at Atari Games in 1999 — the same cryptographic philosophy that drives
-      CELLTOWER's proof-of-human-work architecture today.
-    </p>
-    <p>
-      Holds a patent for keypad-based player data storage across linked arcade cabinets.
-      Has direct experience navigating Nevada Gaming Control Board process and California
-      skill-gaming law. Independent developer and creative director operating from
-      the Tower District, Fresno CA.
-    </p>
-    <p>
-      The throughline: <span class="highlight">verifiable fairness</span>.
-      The math as the trusted party, not the operator.
-    </p>
-  </section>
-
-  <section>
-    <canvas class="title-canvas" data-title="CONNECT"></canvas>
-    <div class="link-grid">
-      <a class="ext-link" href="https://linkedin.com/in/ahigh" target="_blank" rel="noopener">
-        <span class="ext-link-label">Professional</span>
-        <span class="ext-link-name">LinkedIn</span>
-      </a>
-      <a class="ext-link" href="https://github.com/AaHigh" target="_blank" rel="noopener">
-        <span class="ext-link-label">Open Source</span>
-        <span class="ext-link-name">GitHub</span>
-      </a>
-      <a class="ext-link" href="https://aahigh.github.io/CELLTOWER/" target="_blank" rel="noopener">
-        <span class="ext-link-label">Project</span>
-        <span class="ext-link-name">CELLTOWER</span>
-      </a>
-      <a class="ext-link" href="https://aahigh.github.io/CELLTOWER/switchboard.html" target="_blank" rel="noopener">
-        <span class="ext-link-label">Console</span>
-        <span class="ext-link-name">SWITCHBOARD</span>
-      </a>
-      <a class="ext-link" href="https://aahigh.github.io/letters/" target="_blank" rel="noopener">
-        <span class="ext-link-label">Essays</span>
-        <span class="ext-link-name">LETTERS</span>
-      </a>
-      <a class="ext-link" href="./index.html">
-        <span class="ext-link-label">Home</span>
-        <span class="ext-link-name">AHIGHTOWER.COM</span>
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    AHIGHTOWER.COM · the High Tower District · Fresno CA 93728<br>
-    A.A. RON · HIGH TOWER LIVE · @_AAHIGH
-  </footer>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════════════════════
-// BIO — same canvas pipeline as letters/index.html, CELLTOWER,
-// and ahightower.com. Background, header, ticker, brackets, and
-// the splash screen are pixel-identical to the rest of the
-// ecosystem. Bio content is a DOM overlay, same hybrid pattern.
-// ═══════════════════════════════════════════════════════════════
-
-const cv  = document.getElementById('cv');
-const CTX = cv.getContext('2d');
-
-let SW, SH, PORTRAIT;
-let AT = 0, _last = 0;
-
-const C = {
-  bg:     '#080018',
-  border: '#5500aa',
-  borderHi:'#00ffaa',
-  cyan:   '#00ffff',
-  orange: '#ff8800',
-  purple: '#aa88ff',
-  white:  '#ffffff',
-  dim:    '#442266',
-  green:  '#00ff88',
-  red:    '#ff4444',
-};
-
-// ── DM FONT — exact copy from CELLTOWER ─────────────────────
-const DM_FONT = (()=>{
-  const F={};
-  const d=(c,...v)=>{F[c]=v;};
-  d(' ',0x00,0x00,0x00,0x00,0x00);
-  d('!',0x00,0x00,0x5F,0x00,0x00);
-  d('.',0x00,0x60,0x60,0x00,0x00);
-  d('-',0x08,0x08,0x08,0x08,0x08);
-  d('/',0x20,0x10,0x08,0x04,0x02);
-  d(':',0x00,0x36,0x36,0x00,0x00);
-  d('0',0x3E,0x51,0x49,0x45,0x3E);
-  d('1',0x00,0x42,0x7F,0x40,0x00);
-  d('2',0x42,0x61,0x51,0x49,0x46);
-  d('3',0x21,0x41,0x45,0x4B,0x31);
-  d('4',0x18,0x14,0x12,0x7F,0x10);
-  d('5',0x27,0x45,0x45,0x45,0x39);
-  d('6',0x3C,0x4A,0x49,0x49,0x30);
-  d('7',0x01,0x71,0x09,0x05,0x03);
-  d('8',0x36,0x49,0x49,0x49,0x36);
-  d('9',0x06,0x49,0x49,0x29,0x1E);
-  d('A',0x7E,0x11,0x11,0x11,0x7E);
-  d('B',0x7F,0x49,0x49,0x49,0x36);
-  d('C',0x3E,0x41,0x41,0x41,0x22);
-  d('D',0x7F,0x41,0x41,0x22,0x1C);
-  d('E',0x7F,0x49,0x49,0x49,0x41);
-  d('F',0x7F,0x09,0x09,0x09,0x01);
-  d('G',0x3E,0x41,0x49,0x49,0x7A);
-  d('H',0x7F,0x08,0x08,0x08,0x7F);
-  d('I',0x00,0x41,0x7F,0x41,0x00);
-  d('J',0x20,0x40,0x41,0x3F,0x01);
-  d('K',0x7F,0x08,0x14,0x22,0x41);
-  d('L',0x7F,0x40,0x40,0x40,0x40);
-  d('M',0x7F,0x02,0x04,0x02,0x7F);
-  d('N',0x7F,0x04,0x08,0x10,0x7F);
-  d('O',0x3E,0x41,0x41,0x41,0x3E);
-  d('P',0x7F,0x09,0x09,0x09,0x06);
-  d('Q',0x3E,0x41,0x51,0x21,0x5E);
-  d('R',0x7F,0x09,0x19,0x29,0x46);
-  d('S',0x46,0x49,0x49,0x49,0x31);
-  d('T',0x01,0x01,0x7F,0x01,0x01);
-  d('U',0x3F,0x40,0x40,0x40,0x3F);
-  d('V',0x1F,0x20,0x40,0x20,0x1F);
-  d('W',0x3F,0x40,0x38,0x40,0x3F);
-  d('X',0x63,0x14,0x08,0x14,0x63);
-  d('Y',0x07,0x08,0x70,0x08,0x07);
-  d('Z',0x61,0x51,0x49,0x45,0x43);
-  d('[',0x00,0x7F,0x41,0x41,0x00);
-  d(']',0x00,0x41,0x41,0x7F,0x00);
-  d('_',0x40,0x40,0x40,0x40,0x40);
-  d('\x03',0x04,0x2A,0x75,0x2A,0x04); // radio tower glyph
-  'abcdefghijklmnopqrstuvwxyz'.split('').forEach((c,i)=>{
-    F[c]=F[String.fromCharCode(65+i)]||F[' '];
-  });
-  return F;
-})();
-
-function _dmWordLabel(ctx, word, x, y, w, h, color){
-  const str=word.toUpperCase(); const n=str.length; if(!n)return;
-  const dotW=Math.min(w/(n*6), h/8);
-  const dotH=dotW;
-  const charW=6*dotW; const charH=7*dotH;
-  const totalW=n*charW;
-  const startX=x+(w-totalW)/2;
-  const startY=y+(h-charH)/2;
-  ctx.fillStyle=color||'#fff';
-  ctx.shadowColor=color||'#fff';
-  ctx.shadowBlur=dotW*1.5;
-  for(let ci=0;ci<n;ci++){
-    const ch=str[ci];
-    const glyph=DM_FONT[ch]||DM_FONT[' '];
-    const ox=startX+ci*charW;
-    for(let col=0;col<5;col++){
-      const colBits=glyph[col]||0;
-      for(let row=0;row<7;row++){
-        if(colBits&(1<<row)){
-          ctx.fillRect(ox+col*dotW, startY+row*dotH,
-            Math.max(1,dotW-0.5), Math.max(1,dotH-0.5));
-        }
-      }
-    }
-  }
-  ctx.shadowBlur=0;
-}
-
-function _dmRainbow(ctx, str, x, y, w, h, t){
-  const n=str.length; if(!n)return;
-  const dotW=Math.min(w/(n*6), h/8);
-  const dotH=dotW;
-  const charW=6*dotW; const charH=7*dotH;
-  const totalW=n*charW;
-  const startX=x+(w-totalW)/2;
-  const startY=y+(h-charH)/2;
-  for(let ci=0;ci<n;ci++){
-    const hue=(t*60+ci*(360/n))%360;
-    const col=`hsl(${hue},100%,62%)`;
-    const ch=str[ci].toUpperCase();
-    const glyph=DM_FONT[ch]||DM_FONT[' '];
-    const ox=startX+ci*charW;
-    ctx.fillStyle=col; ctx.shadowColor=col; ctx.shadowBlur=dotW*2.5;
-    for(let c=0;c<5;c++){
-      const colBits=glyph[c]||0;
-      for(let row=0;row<7;row++){
-        if(colBits&(1<<row)){
-          ctx.fillRect(ox+c*dotW, startY+row*dotH,
-            Math.max(1,dotW-0.5), Math.max(1,dotH-0.5));
-        }
-      }
-    }
-  }
-  ctx.shadowBlur=0;
-}
-
-let headerBottom=0, tickerTop=0;
-function resize(){
-  SW=document.documentElement.clientWidth||window.innerWidth||390;
-  SH=document.documentElement.clientHeight||window.innerHeight||844;
-  cv.width=SW; cv.height=SH;
-  cv.style.width=SW+'px'; cv.style.height=SH+'px';
-  PORTRAIT=(SH>SW);
-
-  headerBottom = PORTRAIT? SH*0.18 : SH*0.23;
-  tickerTop    = SH - SH*0.04 - 4;
-  layoutPanel();
-}
-
-function layoutPanel(){
-  const panel=document.getElementById('hub-panel');
-  const sideMargin = Math.max(16, Math.round(SW*0.06));
-  panel.style.top    = headerBottom+'px';
-  panel.style.bottom = (SH-tickerTop)+'px';
-  panel.style.left   = sideMargin+'px';
-  panel.style.right  = sideMargin+'px';
-  panel.style.padding = '0.4rem 0.2rem 0 0.2rem';
-}
-
-let _mqX=0;
-const MARQUEE_MSGS=[
-  'THE HIGH TOWER DISTRICT \u00b7 FRESNO CA \u00b7 AHIGHTOWER.COM \u00b7 ',
-  'PILOTWINGS 64 \u00b7 SF RUSH 2049 \u00b7 JAK 3 \u00b7 PATENT HOLDER \u00b7 ',
-  'A.A. RON \u00b7 HIGH TOWER LIVE \u00b7 _AAHIGH \u00b7 ',
-];
-let _mqMsg=MARQUEE_MSGS.join('');
-let _mqHueOff=0;
-
-function _drawTicker(dt){
-  const TH=Math.round(SH*0.04);
-  const TY=SH-TH;
-  CTX.fillStyle='rgba(0,0,16,0.9)';
-  CTX.fillRect(0,TY,SW,TH);
-  CTX.strokeStyle=C.border; CTX.lineWidth=1;
-  CTX.beginPath(); CTX.moveTo(0,TY); CTX.lineTo(SW,TY); CTX.stroke();
-
-  const PX_PER_SEC=SW*0.18;
-  _mqX-=PX_PER_SEC*dt;
-  _mqHueOff+=PX_PER_SEC*0.5*dt;
-
-  const dotH=TH*0.55;
-  const dotW=dotH/8*1.1;
-  const charW=6*dotW; const charH=7*(dotW);
-  const totalW=_mqMsg.length*charW;
-  if(_mqX<-totalW) _mqX+=totalW;
-
-  for(let copy=0;copy<2;copy++){
-    const ox=_mqX+copy*totalW;
-    for(let ci=0;ci<_mqMsg.length;ci++){
-      const cx2=ox+ci*charW;
-      if(cx2<-charW||cx2>SW+charW) continue;
-      const hue=((_mqHueOff+ci*charW)*0.8)%360;
-      const col=`hsl(${hue},100%,62%)`;
-      const ch=_mqMsg[ci].toUpperCase();
-      const glyph=DM_FONT[ch]||DM_FONT[' '];
-      CTX.fillStyle=col; CTX.shadowColor=col; CTX.shadowBlur=3;
-      for(let c=0;c<5;c++){
-        const bits=glyph[c]||0;
-        for(let row=0;row<7;row++){
-          if(bits&(1<<row)){
-            CTX.fillRect(
-              Math.round(cx2+c*dotW),
-              Math.round(TY+(TH-charH)/2+row*dotW),
-              Math.max(1,dotW-0.5), Math.max(1,dotW-0.5)
-            );
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'system-ui', 'sans-serif'],
           }
         }
       }
     }
-  }
-  CTX.shadowBlur=0;
-}
-
-function _drawBrackets(){
-  const s=Math.round(SW*0.05);
-  const m=Math.round(SW*0.03);
-  const T=Math.round(SH*0.04)+m;
-  const B=SH-Math.round(SH*0.04)-m;
-  CTX.strokeStyle=C.border; CTX.lineWidth=2;
-  [[m,T,1,1],[SW-m,T,-1,1],[m,B,1,-1],[SW-m,B,-1,-1]].forEach(([x,y,dx,dy])=>{
-    CTX.beginPath();
-    CTX.moveTo(x+s*dx,y); CTX.lineTo(x,y); CTX.lineTo(x,y+s*dy);
-    CTX.stroke();
-  });
-}
-
-function _drawHeader(){
-  const str='AARON HIGHTOWER';
-  const hY=PORTRAIT?SH*0.04:SH*0.05;
-  const hH=PORTRAIT?SH*0.07:SH*0.10;
-  const hX=SW*0.04; const hW=SW*0.92;
-  _dmRainbow(CTX, str, hX, hY, hW, hH, AT);
-
-  const sub='THE HIGH TOWER DISTRICT \u00b7 FRESNO CA';
-  CTX.font=`600 ${Math.round(SW*0.022)}px monospace`;
-  CTX.fillStyle=C.dim; CTX.textAlign='center'; CTX.textBaseline='top';
-  CTX.shadowBlur=0;
-  CTX.fillText(sub, SW/2, hY+hH+SW*0.01);
-}
-
-let STATE='SPLASH';
-
-function drawSplash(t){
-  const bx=SW*0.06, by=headerBottom, bw=SW*0.88, bh=tickerTop-headerBottom;
-
-  CTX.fillStyle='rgba(0,0,0,0.55)';
-  CTX.fillRect(bx,by,bw,bh);
-
-  const barCount=18;
-  const barW=bw/barCount;
-  const maxBarH=bh*0.40;
-  const barBaseY=by+bh*0.62;
-
-  for(let i=0;i<barCount;i++){
-    const phase=i*1.3+0.7;
-    const speed=0.4+(i%5)*0.15;
-    const frac=0.15+0.85*Math.abs(Math.sin(t*speed+phase));
-    const barH=maxBarH*frac;
-    const bBarX=bx+i*barW+barW*0.08;
-    const bBarW=barW*0.78;
-
-    const segH=Math.max(3,bh*0.018);
-    const segGap=Math.max(1,segH*0.35);
-    const segStep=segH+segGap;
-    const numSegs=Math.floor(barH/segStep);
-
-    for(let s=0;s<numSegs;s++){
-      const segFrac=s/Math.max(1,Math.floor(maxBarH/segStep));
-      let r,g,b;
-      if(segFrac<0.6){ r=0; g=200; b=40+(segFrac*80)|0; }
-      else if(segFrac<0.82){ const f=(segFrac-0.6)/0.22; r=(f*255)|0; g=200; b=0; }
-      else { const f=(segFrac-0.82)/0.18; r=255; g=(200*(1-f))|0; b=0; }
-      const alpha=0.7+0.3*frac;
-      CTX.fillStyle=`rgba(${r},${g},${b},${alpha})`;
-      CTX.shadowColor=`rgb(${r},${g},${b})`;
-      CTX.shadowBlur=segH*1.2;
-      const sy=barBaseY-(s+1)*segStep;
-      CTX.fillRect(bBarX,sy,bBarW,segH);
+  </script>
+  <style>
+    body { background: #0a0a0a; color: #e8e8e8; }
+    .project-card {
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
-    const peakFrac=0.2+0.78*Math.abs(Math.sin(t*speed*0.3+phase+1.1));
-    const peakH=maxBarH*Math.max(frac,peakFrac);
-    const peakY=barBaseY-peakH-segStep;
-    CTX.fillStyle='rgba(255,255,100,0.9)';
-    CTX.shadowColor='#ffff44'; CTX.shadowBlur=segH*2;
-    CTX.fillRect(bBarX,peakY,bBarW,segH);
-  }
-  CTX.shadowBlur=0;
+    .project-card:hover {
+      border-color: #f4c95d66;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen">
 
-  _dmWordLabel(CTX,'GAME DEVELOPER \u00b7 CREATIVE DIRECTOR \u00b7 BROADCASTER',
-    bx+bw*0.04, by+bh*0.02, bw*0.92, bh*0.05, '#7755aa');
+  <div class="max-w-3xl mx-auto px-5 py-10 sm:py-14">
 
-  const btnW=bw*0.78, btnH=bh*0.14;
-  const btnX=bx+(bw-btnW)/2, btnY=by+bh*0.68;
-  const pulse=0.65+0.35*Math.sin(t*2.8);
+    <!-- Back -->
+    <a href="./index.html" class="inline-flex items-center gap-2 text-sm text-[#f4c95d] hover:underline mb-8">
+      ← BACK TO AHIGHTOWER.COM
+    </a>
 
-  CTX.fillStyle='rgba(0,0,0,0.88)';
-  roundRect(btnX,btnY,btnW,btnH,10); CTX.fill();
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="text-xs tracking-widest uppercase text-[#f4c95d] mb-3">Game Developer · Creative Director · Broadcaster</div>
+      <h1 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight mb-2">AARON HIGHTOWER</h1>
+      <p class="text-[#aaa] text-lg">A.A. RON · the High Tower District · Tower District, Fresno CA 93728</p>
+    </header>
 
-  const hB1=(t*40)%360, hB2=(hB1+180)%360;
-  CTX.strokeStyle=`hsla(${hB1},100%,60%,${pulse})`;
-  CTX.lineWidth=2.5;
-  roundRect(btnX,btnY,btnW,btnH,10); CTX.stroke();
-  CTX.strokeStyle=`hsla(${hB2},100%,60%,${pulse*0.5})`;
-  CTX.lineWidth=1;
-  roundRect(btnX+3,btnY+3,btnW-6,btnH-6,8); CTX.stroke();
+    <!-- Throughline -->
+    <section class="mb-14 p-5 rounded-2xl border border-white/10 bg-[#141414]">
+      <p class="text-[#ccc] leading-relaxed">
+        Veteran arcade and console developer with credits spanning Nintendo 64, PlayStation 2, Dreamcast, and Nevada-regulated skill gaming. Designed the first SHA-based arcade score verification system for cash-prize competitions at Atari Games in 1999 — the same cryptographic philosophy that drives CELLTOWER’s proof-of-human-work architecture today.
+      </p>
+      <p class="text-[#ccc] leading-relaxed mt-4">
+        Holds patents including multi-subsystem architecture for reducing motion-to-photon latency in wearable/VR displays. Direct experience navigating Nevada Gaming Control Board process and California skill-gaming law. Independent developer and creative director operating from the Tower District, Fresno CA.
+      </p>
+      <p class="text-[#f4c95d] font-medium mt-4">
+        The throughline: verifiable fairness. The math as the trusted party, not the operator.
+      </p>
+    </section>
 
-  const hT=(t*50+120)%360;
-  CTX.shadowColor=`hsl(${hT},100%,65%)`; CTX.shadowBlur=12*pulse;
-  _dmWordLabel(CTX,'TAP TO ENTER',btnX+btnW*0.06,btnY+btnH*0.16,btnW*0.88,btnH*0.7,`hsl(${hT},100%,70%)`);
-  CTX.shadowBlur=0;
+    <!-- Career Timeline -->
+    <section class="mb-14">
+      <h2 class="font-display text-xl font-semibold text-white mb-6 tracking-tight">Career</h2>
+      <div class="space-y-4">
 
-  const waveY=by+bh*0.86, waveH=bh*0.10;
-  CTX.strokeStyle='rgba(0,255,150,0.5)'; CTX.lineWidth=1.5;
-  CTX.beginPath();
-  for(let px=0;px<bw;px+=2){
-    const phase2=px/bw*Math.PI*6;
-    const amp=waveH*0.4*(0.5+0.5*Math.sin(t*1.8+px*0.04));
-    const wy=waveY+waveH/2+amp*Math.sin(phase2+t*3.2);
-    px===0?CTX.moveTo(bx+px,wy):CTX.lineTo(bx+px,wy);
-  }
-  CTX.stroke();
-  CTX.strokeStyle='rgba(180,0,255,0.35)';
-  CTX.beginPath();
-  for(let px=0;px<bw;px+=2){
-    const phase2=px/bw*Math.PI*8+1.2;
-    const amp=waveH*0.3*(0.4+0.6*Math.abs(Math.sin(t*2.1+px*0.03)));
-    const wy=waveY+waveH/2+amp*Math.sin(phase2-t*2.5);
-    px===0?CTX.moveTo(bx+px,wy):CTX.lineTo(bx+px,wy);
-  }
-  CTX.stroke();
-}
+        <!-- YATC -->
+        <a href="career/yatc.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Yet Another Tetris Clone (YATC)</h3>
+            <span class="text-xs text-[#888]">1991 · Amiga</span>
+          </div>
+          <p class="text-sm text-[#999]">First original title. College roommate Richard A. Baker (later COD:MW2 lead engineer) in the special thanks.</p>
+        </a>
 
-function roundRect(x,y,w,h,r){
-  CTX.beginPath();
-  CTX.moveTo(x+r,y);
-  CTX.arcTo(x+w,y,x+w,y+h,r);
-  CTX.arcTo(x+w,y+h,x,y+h,r);
-  CTX.arcTo(x,y+h,x,y,r);
-  CTX.arcTo(x,y,x+w,y,r);
-  CTX.closePath();
-}
+        <!-- Pilotwings -->
+        <a href="career/pilotwings-64.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Pilotwings 64</h3>
+            <span class="text-xs text-[#888]">1996 · Nintendo 64</span>
+          </div>
+          <p class="text-sm text-[#999]">Software Engineering · Paradigm Simulation for Nintendo. Hang-glider animation (quaternions).</p>
+        </a>
 
-// per-section DM rainbow title canvases (same mechanism as letters page)
-let titleCanvasList=[];
-function setupTitleCanvases(){
-  titleCanvasList=[];
-  document.querySelectorAll('.title-canvas').forEach(canvas=>{
-    const rect=canvas.getBoundingClientRect();
-    const w=Math.max(40,Math.round(rect.width));
-    const h=30;
-    canvas.width=w; canvas.height=h;
-    titleCanvasList.push({canvas, ctx:canvas.getContext('2d'), text:canvas.dataset.title, w, h});
-  });
-}
+        <!-- SF Rush lineage -->
+        <a href="career/sf-rush-2049.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">San Francisco Rush / Rush 2049</h3>
+            <span class="text-xs text-[#888]">1997–2003 · Atari Games / Midway</span>
+          </div>
+          <p class="text-sm text-[#999]">Lead Programmer on Rush 2049 arcade (and Special Edition). SHA-based score verification for cash-prize play. Dreamcast & N64 ports. Peak career horizon point.</p>
+        </a>
 
-function drawFrame(ts){
-  const dt=Math.min((ts-_last)/1000, 0.05);
-  _last=ts; AT=ts/1000;
+        <!-- Raw Thrills offer -->
+        <a href="career/raw-thrills-offer.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Raw Thrills — Fast & Furious Offer</h3>
+            <span class="text-xs text-[#888]">~2003–2004 · Declined</span>
+          </div>
+          <p class="text-sm text-[#999]">Offered the lead position on <em>The Fast and the Furious</em> arcade by Eugene Jarvis (Defender, first color-graphics arcade game). Declined in favor of Naughty Dog. Jarvis respected the choice.</p>
+        </a>
 
-  CTX.fillStyle=C.bg;
-  CTX.fillRect(0,0,SW,SH);
+        <!-- Jak 3 -->
+        <a href="career/jak-3.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Jak 3</h3>
+            <span class="text-xs text-[#888]">2004 · Naughty Dog / Sony · PS2</span>
+          </div>
+          <p class="text-sm text-[#999]">Developer. Animation systems (again involving hang-glider / quaternion work). One of the rare résumés submitted; offer came quickly.</p>
+        </a>
 
-  CTX.strokeStyle='rgba(85,0,170,0.12)';
-  CTX.lineWidth=1;
-  const GRID=Math.round(SW*0.08);
-  for(let x=0;x<SW;x+=GRID){CTX.beginPath();CTX.moveTo(x,0);CTX.lineTo(x,SH);CTX.stroke();}
-  for(let y=0;y<SH;y+=GRID){CTX.beginPath();CTX.moveTo(0,y);CTX.lineTo(SW,y);CTX.stroke();}
+        <!-- Red 5 / Firefall corrected -->
+        <a href="career/red5-firefall.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Red 5 Studios / Firefall</h3>
+            <span class="text-xs text-[#888]">~2009 window · Corrected</span>
+          </div>
+          <p class="text-sm text-[#999]">Left Orange County 2009, relocated to Las Vegas 2010. No active Red 5 / Firefall involvement in 2013. Residual credit appears in some databases; the 2013 dating previously listed was incorrect.</p>
+        </a>
 
-  _drawTicker(dt);
-  _drawBrackets();
-  _drawHeader();
+        <!-- NanoTech -->
+        <a href="career/nanotech.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">NanoTech Gaming · BetCube</h3>
+            <span class="text-xs text-[#888]">~2013–2018 · President</span>
+          </div>
+          <p class="text-sm text-[#999]">Promoted to President 2015. Physics-based high-frame-rate simulation for skill-based wagering systems. Nevada Gaming Control Board experience. Company later involved in litigation and the David Foley securities matter; focus remained on clean IP and prior art extraction.</p>
+        </a>
 
-  if(STATE==='SPLASH') drawSplash(AT);
+        <!-- Patents -->
+        <a href="career/patents.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">Patents</h3>
+            <span class="text-xs text-[#888]">2015–2016 granted</span>
+          </div>
+          <p class="text-sm text-[#999]">US9339732B2 (Wearable Display System and Method) — multi-subsystem architecture reducing motion-to-photon latency. US8992318B2 related ultra-low latency VR immersion work. Discussed with IP leadership as high residual value for licensing.</p>
+        </a>
 
-  for(const tc of titleCanvasList){
-    tc.ctx.clearRect(0,0,tc.w,tc.h);
-    _dmRainbow(tc.ctx, tc.text, 0, 0, tc.w, tc.h, AT);
-  }
+        <!-- CELLTOWER -->
+        <a href="career/celltower.html" class="project-card block p-5 rounded-xl border border-white/10 bg-[#141414]">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h3 class="font-semibold text-white">CELLTOWER</h3>
+            <span class="text-xs text-[#888]">2026 · Active</span>
+          </div>
+          <p class="text-sm text-[#999]">Single-file HTML5 NES-style Tetris with cryptographic verification (SHA-256 hash chain, base-92 streams, Humanity Probability Score). Legal skill-based competition platform under California law. Direct descendant of the 1999 Atari score-verification work.</p>
+        </a>
 
-  requestAnimationFrame(drawFrame);
-}
+      </div>
+    </section>
 
-function enterHub(){
-  if(STATE!=='SPLASH') return;
-  STATE='HUB';
-  document.getElementById('hub-panel').classList.add('visible');
-}
-cv.addEventListener('click', enterHub);
-cv.addEventListener('touchstart', e=>{ e.preventDefault(); enterHub(); }, {passive:false});
+    <!-- Current -->
+    <section class="mb-14">
+      <h2 class="font-display text-xl font-semibold text-white mb-4 tracking-tight">Current</h2>
+      <ul class="space-y-2 text-[#ccc]">
+        <li><span class="text-[#f4c95d]">•</span> CELLTOWER + SWITCHBOARD (tournament ops, hash-chained ledger)</li>
+        <li><span class="text-[#f4c95d]">•</span> High Tower District Stories & Letters</li>
+        <li><span class="text-[#f4c95d]">•</span> Music production (trap / boom-bap / psychedelic under A.A. RON)</li>
+        <li><span class="text-[#f4c95d]">•</span> Local Fresno / Tower District community work</li>
+      </ul>
+    </section>
 
-window.addEventListener('resize', resize);
+    <!-- Links -->
+    <section class="border-t border-white/10 pt-8">
+      <div class="flex flex-wrap gap-4 text-sm">
+        <a href="https://linkedin.com/in/ahigh" class="text-[#f4c95d] hover:underline">LinkedIn</a>
+        <a href="https://github.com/AaHigh" class="text-[#f4c95d] hover:underline">GitHub</a>
+        <a href="https://aahigh.github.io/CELLTOWER/" class="text-[#f4c95d] hover:underline">CELLTOWER</a>
+        <a href="https://stories.ahightower.com/" class="text-[#f4c95d] hover:underline">Stories</a>
+        <a href="./index.html" class="text-[#f4c95d] hover:underline">ahightower.com</a>
+      </div>
+    </section>
 
-resize();
-setupTitleCanvases();
-requestAnimationFrame(drawFrame);
-</script>
+  </div>
 </body>
 </html>
