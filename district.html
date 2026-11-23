@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The High Tower District — Aaron Hightower</title>
+<meta name="description" content="The High Tower District, Fresno CA. The Tower Theatre, the games, the pizza, the table — a real place, on the record. Find Aaron on LinkedIn, Facebook, TikTok, Instagram and YouTube, join the group, read the stories, and see the work on GitHub.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The High Tower District — Aaron Hightower">
+<meta property="og:description" content="The neighborhood, on the record. Tower Theatre, Olive Ave, Fresno CA — the games, the pizza, the table, the work.">
+<meta property="og:url" content="https://ahightower.com/district.html">
+<meta property="og:image" content="https://ahightower.com/img/tower-night.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ahightower.com/img/tower-night.jpg">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --night:#0e0d0b;
+    --asphalt:#171410;
+    --card:#1e1a14;
+    --line:#3a3126;
+    --cream:#f2ead8;
+    --muted:#b3a78e;
+    --gold:#e8b64c;
+    --ember:#ff9a3c;
+    --brick:#a63a2a;
+    --pine:#3fa08f;
+  }
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--night);
+    color:var(--cream);
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 0 48px}
+  a{color:inherit}
+  .pad{padding:0 20px}
+
+  /* ── Top bar ── */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 20px 12px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  }
+  .topbar a{color:var(--gold);text-decoration:none}
+  .topbar span{color:var(--muted)}
+
+  /* ── Hero photo ── */
+  .hero{position:relative;height:min(78vh,720px);overflow:hidden}
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center 30%;
+  }
+  .hero .shade{
+    position:absolute;inset:0;
+    background:linear-gradient(to bottom,rgba(14,13,11,0) 40%,rgba(14,13,11,.45) 68%,rgba(14,13,11,.97) 100%);
+  }
+  .hero .title{
+    position:absolute;left:20px;right:20px;bottom:16px;
+  }
+  .hero .who{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--gold);
+    text-shadow:0 0 14px rgba(232,182,76,.8);
+    margin-bottom:6px;
+  }
+  .hero h1{
+    font-size:44px;line-height:.98;font-weight:700;letter-spacing:-.01em;
+    color:#fdf6e3;
+    text-shadow:0 0 18px rgba(255,190,90,.55),0 0 46px rgba(255,140,60,.35),0 2px 10px rgba(0,0,0,.8);
+  }
+  .hero h1 em{font-style:normal;color:var(--ember)}
+  .caption{
+    font-size:12.5px;color:var(--muted);font-style:italic;
+    padding:10px 20px 0;
+  }
+  .caption b{color:var(--gold);font-style:normal}
+
+  /* ── Vision intro ── */
+  .vision{
+    font-size:18px;line-height:1.6;
+    padding:22px 20px 0;
+  }
+  .vision b{color:var(--gold)}
+
+  /* ── Sections ── */
+  h2{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin:36px 0 12px;
+    padding-top:18px;border-top:1px solid var(--line);
+  }
+  .section-note{font-size:15px;color:var(--muted);margin:-4px 0 14px;font-style:italic}
+  .section-text{font-size:16px;line-height:1.6;margin:0 0 14px}
+  .section-text b{color:var(--gold)}
+
+  /* ── Photos ── */
+  .photo{margin:16px 0}
+  .photo img{
+    display:block;width:100%;height:auto;
+    border-radius:12px;border:1px solid var(--line);
+  }
+  .photo figcaption{
+    font-size:13px;color:var(--muted);font-style:italic;margin-top:8px;line-height:1.45;
+  }
+  .photo figcaption b{color:var(--gold);font-style:normal}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  @media (max-width:560px){ .duo{grid-template-columns:1fr} }
+
+  /* ── Buttons ── */
+  .btn{
+    display:inline-block;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    border:1.5px solid var(--gold);color:var(--gold);
+    border-radius:999px;padding:9px 17px;text-decoration:none;
+    transition:background .15s ease,color .15s ease;
+  }
+  .btn:hover,.btn:active{background:var(--gold);color:#171410}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+
+  /* ── Link cards ── */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:480px){ .cards{grid-template-columns:1fr} }
+  .card{
+    display:block;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;
+    padding:16px 16px 14px;text-decoration:none;
+    transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
+  }
+  .card:hover,.card:active{
+    transform:translateY(-2px);border-color:var(--gold);
+    box-shadow:0 0 22px rgba(232,182,76,.18);
+  }
+  .card .plat{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:6px;
+  }
+  .card .handle{font-size:19px;font-weight:700;line-height:1.2;color:var(--cream)}
+  .card .note{font-size:13.5px;color:var(--muted);margin-top:4px;font-style:italic}
+  .card.wide{grid-column:1 / -1}
+
+  /* ── Stories banner ── */
+  .stories{
+    display:block;background:var(--brick);color:#fdf8ec;
+    border-radius:12px;padding:22px 20px;text-decoration:none;
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .stories:hover,.stories:active{transform:translateY(-2px);box-shadow:0 8px 26px rgba(166,58,42,.45)}
+  .stories .plat{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:#f3d9a4;margin-bottom:8px;
+  }
+  .stories h3{font-size:27px;line-height:1.1;font-weight:700}
+  .stories p{font-size:15px;margin-top:8px;opacity:.92;font-style:italic}
+  .stories .go{
+    display:inline-block;margin-top:14px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    border:1.5px solid #fdf8ec;border-radius:999px;padding:8px 16px;
+  }
+
+  /* ── GitHub ── */
+  .github{
+    display:block;background:#101613;
+    border:1px solid #2b3d33;border-radius:12px;
+    padding:22px 20px;text-decoration:none;
+    transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
+  }
+  .github:hover,.github:active{
+    transform:translateY(-2px);border-color:var(--pine);
+    box-shadow:0 0 24px rgba(63,160,143,.20);
+  }
+  .github .plat{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--pine);margin-bottom:8px;
+  }
+  .github h3{font-size:26px;line-height:1.1;font-weight:700}
+  .github h3 span{color:var(--pine)}
+  .github p{font-size:15px;margin-top:8px;color:var(--muted);font-style:italic}
+  .github p b{color:var(--cream);font-style:normal}
+  .github .go{
+    display:inline-block;margin-top:14px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    border:1.5px solid var(--pine);color:var(--pine);
+    border-radius:999px;padding:8px 16px;
+  }
+
+  /* ── Chips ── */
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:13.5px;font-weight:600;text-decoration:none;
+    border:1.5px solid var(--gold);color:var(--gold);
+    border-radius:999px;padding:8px 15px;
+    transition:background .15s ease,color .15s ease;
+  }
+  .chip:hover,.chip:active{background:var(--gold);color:#171410}
+
+  /* ── Footer ── */
+  footer{margin:40px 20px 0;padding-top:18px;border-top:1px solid var(--line)}
+  .back{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:14px;font-weight:600;color:var(--gold);text-decoration:none;
+  }
+  .back:hover{text-decoration:underline}
+  .colophon{font-size:13px;color:var(--muted);font-style:italic;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <a href="./index.html">← Ahightower.com</a>
+    <span>Fresno · CA · 93728</span>
+  </div>
+
+  <!-- Hero: the Tower at night -->
+  <div class="hero">
+    <img src="./img/tower-night.jpg" alt="The Tower Theatre on Olive Avenue at night — the neon marquee lit, the tower lit red, the starburst on top.">
+    <div class="shade"></div>
+    <div class="title">
+      <div class="who">Aaron Hightower</div>
+      <h1>The High<br>Tower <em>District</em></h1>
+    </div>
+  </div>
+  <p class="caption"><b>The Tower Theatre, 815 E Olive Ave, at night.</b> The marquee lit, the tower lit. This is the place.</p>
+
+  <!-- Vision -->
+  <p class="vision">The High Tower District is a <b>real place</b>. It&rsquo;s the blocks around the Tower Theatre in Fresno &mdash; Olive Ave, Wishon, the 777. Everything here is built on those blocks: the games, the pizza, the sermons, the stories. My name goes up with the Tower because the work happens here, in the open, where anybody can come and see it.</p>
+
+  <div class="pad">
+
+  <!-- THE TOWER -->
+  <h2>The Tower</h2>
+  <figure class="photo">
+    <img src="./img/tower-crowd.jpg" alt="A crowd lined up outside the Tower Theatre, waiting for the doors.">
+    <figcaption><b>The line outside the Tower.</b> Concerts, film festivals, comedy &mdash; this is who shows up. The group is where it all gets talked about.</figcaption>
+  </figure>
+  <div class="btn-row">
+    <a class="btn" href="https://www.facebook.com/groups/1463146980962057/">Join the group →</a>
+  </div>
+
+  <!-- THE GAME -->
+  <h2>The Game</h2>
+  <p class="section-text">Lead programmer, <b>San Francisco Rush 2049</b> &mdash; the marquee says the name. Twenty-seven years later the game is still the work: CELLTOWER, verified skill, real stakes, Thursday nights.</p>
+  <div class="duo">
+    <figure class="photo">
+      <img src="./img/rush-cartoon.jpg" alt="Aaron Hightower leaning on a San Francisco Rush 2049 arcade cabinet under the Tower Theatre marquee, which reads AARON HIGHTOWER, LEAD PROGRAMMER, RUSH 2049.">
+      <figcaption><b>Under the marquee.</b> Aaron Hightower, lead programmer, Rush 2049.</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="./img/celltower-poster.jpg" alt="CELLTOWER poster by Aaron Hightower — a cell tower built of Tetris blocks at sunset, Thursday Night Skill Sessions, Verified Skill. Real Stakes. High Tower District.">
+      <figcaption><b>CELLTOWER.</b> Thursday Night Skill Sessions &mdash; verified skill, real stakes.</figcaption>
+    </figure>
+  </div>
+  <div class="btn-row">
+    <a class="btn" href="https://celltower.ahightower.com/">Play CELLTOWER →</a>
+    <a class="btn" href="./bio.html">Who is Aaron →</a>
+  </div>
+
+  <!-- THE TABLE -->
+  <h2>The Table</h2>
+  <p class="section-text">The District runs on <b>food and drink and people who stay</b>. Sequoia Brewing at 777 E Olive is where the neighborhood meets. The pizza window is where it eats.</p>
+  <figure class="photo">
+    <img src="./img/sequoia-777.jpg" alt="Sequoia Brewing, 777 E Olive Avenue, at dusk — the sign and the 777 awning over the door.">
+    <figcaption><b>Sequoia Brewing, 777 E Olive Ave.</b> Where the District meets. <a href="https://stories.ahightower.com/wsdn-777/">The story of the 777 &rarr;</a></figcaption>
+  </figure>
+  <div class="duo">
+    <figure class="photo">
+      <img src="./img/sticker-table.jpg" alt="A bar table covered in brewery stickers, with a large bearded mascot decal in the center.">
+      <figcaption><b>The table.</b> Every sticker is a night out in the Tower.</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="./img/pizza-window.jpg" alt="People in line at a pizza window at night — OPEN in neon, a FIVE DOLLAR SLICE sign in the window.">
+      <figcaption><b>Five dollar slice, Olive Ave, late night.</b> The line at the window is the District eating.</figcaption>
+    </figure>
+  </div>
+  <div class="btn-row">
+    <a class="btn" href="https://pizza.ahightower.com/">High Tower District Pizza →</a>
+  </div>
+
+  <!-- THE MACHINE -->
+  <h2>The Machine</h2>
+  <figure class="photo">
+    <img src="./img/asteroids-cab.jpg" alt="Aaron's Asteroids arcade cabinet, Atari, in the house — marquee, screen, and controls.">
+    <figcaption><b>Asteroids, in the house.</b> The arcade is physical, not a metaphor &mdash; Ms. Pac-Man, Galaga, Super Pac-Man, and the Asteroids cabinet, all within walking distance of the Tower.</figcaption>
+  </figure>
+  <div class="btn-row">
+    <a class="btn" href="https://celltower.ahightower.com/">The skill platform →</a>
+  </div>
+
+  <!-- FIND AARON -->
+  <h2>Find Aaron</h2>
+  <p class="section-note">Everywhere he posts, in one place. No algorithms in between.</p>
+  <div class="cards">
+    <a class="card" href="https://www.linkedin.com/in/ahigh">
+      <div class="plat">LinkedIn</div>
+      <div class="handle">@ahigh</div>
+      <div class="note">Work, writing, and the public record.</div>
+    </a>
+    <a class="card" href="https://www.tiktok.com/@ahightower.com">
+      <div class="plat">TikTok</div>
+      <div class="handle">@ahightower.com</div>
+      <div class="note">Short video from the District.</div>
+    </a>
+    <a class="card" href="https://www.instagram.com/hightowerdistrict/">
+      <div class="plat">Instagram</div>
+      <div class="handle">@hightowerdistrict</div>
+      <div class="note">Photos and reels from the neighborhood.</div>
+    </a>
+    <a class="card" href="https://www.youtube.com/ahigh">
+      <div class="plat">YouTube</div>
+      <div class="handle">The High Tower District</div>
+      <div class="note">1,000+ subscribers. Lives, council record, karaoke.</div>
+    </a>
+    <a class="card" href="https://www.facebook.com/profile.php?id=1022446685">
+      <div class="plat">Facebook · Profile</div>
+      <div class="handle">Aaron Hightower</div>
+      <div class="note">Personal profile, administers the group.</div>
+    </a>
+    <a class="card wide" href="https://www.facebook.com/groups/1463146980962057/">
+      <div class="plat">Facebook · Group</div>
+      <div class="handle">THE HIGH TOWER DISTRICT</div>
+      <div class="note">The main group. Nightlife, bands, food, local life — and the record of it all. Ask to join.</div>
+    </a>
+  </div>
+
+  <!-- GitHub: the public record -->
+  <h2>The work, on the record</h2>
+  <a class="github" href="https://github.com/AAHIGH">
+    <div class="plat">GitHub · AAHIGH</div>
+    <h3>The code is the <span>character reference.</span></h3>
+    <p><b>31 public repos. 59 commits in the last 30 days.</b> Every project dated, every version kept. Don't take his word for it — read the record.</p>
+    <span class="go">Open github.com/AAHIGH →</span>
+  </a>
+  <div style="height:12px"></div>
+  <div class="chips">
+    <a class="chip" href="https://github.com/AAHIGH/cellTower">cellTower</a>
+    <a class="chip" href="https://github.com/AAHIGH/aahigh">aahigh</a>
+    <a class="chip" href="https://github.com/AAHIGH/district">district</a>
+    <a class="chip" href="https://github.com/AAHIGH/stories">stories</a>
+    <a class="chip" href="https://github.com/AAHIGH/tracks">tracks</a>
+    <a class="chip" href="https://github.com/AAHIGH/karaoke">karaoke</a>
+    <a class="chip" href="https://github.com/AAHIGH/pizza">pizza</a>
+    <a class="chip" href="https://github.com/AAHIGH/etc">etc</a>
+  </div>
+
+  <!-- Stories -->
+  <h2>Read the stories</h2>
+  <a class="stories" href="https://stories.ahightower.com/">
+    <div class="plat">Stories · ahightower.com</div>
+    <h3>Stories from the High Tower District</h3>
+    <p>Civic record, sermons, and neighborhood history — written down so nobody has to take anyone's word for it.</p>
+    <span class="go">Open stories.ahightower.com →</span>
+  </a>
+
+  <!-- More from the district -->
+  <h2>More from the District</h2>
+  <div class="chips">
+    <a class="chip" href="https://celltower.ahightower.com/">CELLTOWER</a>
+    <a class="chip" href="https://district.ahightower.com/">District</a>
+    <a class="chip" href="https://sermon.ahightower.com/">Sermons</a>
+    <a class="chip" href="https://tracks.ahightower.com/">Tracks</a>
+    <a class="chip" href="https://karaoke.ahightower.com/">Karaoke</a>
+    <a class="chip" href="https://pizza.ahightower.com/">Pizza</a>
+    <a class="chip" href="https://letters.ahightower.com/">Letters</a>
+    <a class="chip" href="./bio.html">Who is Aaron</a>
+  </div>
+
+  </div><!-- /pad -->
+
+  <footer>
+    <a class="back" href="./index.html">← Back to ahightower.com</a>
+    <p class="colophon">Built in the Tower District, Fresno CA. 721 E La Sierra Dr · 93728.</p>
+  </footer>
+
+</div>
+</body>
+</html>

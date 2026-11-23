@@ -28,6 +28,7 @@ canvas#cv{display:block;position:fixed;top:0;left:0;touch-action:none}
 <script>
 // ═══════════════════════════════════════════════════════════════
 // AHIGHTOWER.COM — canvas-native, same pipeline as CELLTOWER
+// PREVIEW: third hub option HIGH TOWER DISTRICT added -> ./district.html
 // Single-canvas renderer. No HTML UI. 9:16 / 16:9 adaptive.
 // ═══════════════════════════════════════════════════════════════
 
@@ -1004,6 +1005,17 @@ function _drawHub(){
   CTX.fillStyle=C.purple; CTX.textAlign='center'; CTX.textBaseline='middle';
   CTX.fillText('\u25c8  WHO IS AARON HIGHTOWER', cx2, cy2+btnH/2);
   addHit('hub_bio', btnX, cy2, btnW, btnH);
+  cy2+=btnH+btnGap;
+
+  // Ghost — HIGH TOWER DISTRICT
+  CTX.strokeStyle=C.border; CTX.lineWidth=1;
+  CTX.fillStyle='rgba(85,0,170,0.08)';
+  CTX.fillRect(btnX,cy2,btnW,btnH);
+  CTX.strokeRect(btnX+0.5,cy2+0.5,btnW-1,btnH-1);
+  CTX.font=`900 ${bSz}px monospace`;
+  CTX.fillStyle=C.purple; CTX.textAlign='center'; CTX.textBaseline='middle';
+  CTX.fillText('\u25c8  HIGH TOWER DISTRICT', cx2, cy2+btnH/2);
+  addHit('hub_district', btnX, cy2, btnW, btnH);
   cy2+=btnH+btnGap*2;
 
   // Sign out
@@ -1104,6 +1116,7 @@ function handleTap(px,py){
     return;
   }
   if(id==='hub_bio'){ window.location.href='./bio.html'; return; }
+  if(id==='hub_district'){ window.location.href='./district.html'; return; }
   if(id==='hub_signout'){
     clearS(); pinBuf=''; STATE='PIN';
     twText=''; twIdx=0; twNextT=AT*1000;
